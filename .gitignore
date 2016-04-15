@@ -1,0 +1,13 @@
+.DS_Store
+
+/ephone-z/*
+!ephone-z/*.h
+!ephone-z/*.m
+!ephone-z/README.md
+!info.plist
+!me.plist
+
+gossip/pjsip/
+
+ephone-z.xcodeproj/project.xcworkspace/
+ephone-z.xcodeproj/xcuserdata/
