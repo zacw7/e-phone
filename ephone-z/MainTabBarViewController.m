@@ -81,7 +81,7 @@
     [alert setAlertViewStyle:UIAlertViewStyleDefault];
     [alert setDelegate:self];
     [alert setTitle:@"Incoming call."];
-    [alert addButtonWithTitle:@"Deny"];
+    [alert addButtonWithTitle:@"Decline"];
     [alert addButtonWithTitle:@"Answer"];
     [alert setCancelButtonIndex:0];
     [alert show];

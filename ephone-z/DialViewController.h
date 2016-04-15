@@ -18,7 +18,7 @@
 - (void)makeCall:(NSString*) dialNumber;
 @end
 
-@interface DialViewController : BaseViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, GSAccountDelegate>
+@interface DialViewController : BaseViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) id<DialDelegate> delegate;
 
@@ -29,8 +29,5 @@
 
 @property (weak, nonatomic) UIView *noRecordView;
 @property (strong, nonatomic) PhonePadView *phonePadView;
-
-@property (nonatomic, strong) GSUserAgent *agent;
-@property (nonatomic, strong) GSAccount *account;
 
 @end

@@ -28,10 +28,6 @@
     BOOL isKeyBoardShow;
     //是否开启热点视图
     BOOL isHotPointOn;
-    //是否正在连接
-    BOOL isConnecting;
-    //是否正在通话
-    BOOL isCalling;
     // Call
     GSCall *call;
     
@@ -41,8 +37,6 @@
     //MainTabBarViewController *tabBarController;
 }
 
-@synthesize agent = _agent;
-@synthesize account = _account;
 @synthesize delegate = _delegate;
 @synthesize phonePadView = _phonePadView;
 
@@ -54,10 +48,6 @@
 
 - (void)initData {
     //tabBarController = (MainTabBarViewController*)self.tabBarController;
-    _agent = [GSUserAgent sharedAgent];
-    _account = _agent.account;
-    isConnecting = NO;
-    isCalling = NO;
 }
 
 - (void)initViews{
@@ -89,11 +79,6 @@
     [_phonePadView setBackgroundColor:[UIColor whiteColor]];
     [self initKeyboard];
     [self.view addSubview:_phonePadView];
-}
-
-- (void)dealloc {
-//    [call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
-    call = nil;
 }
 
 - (void)initKeyboard {
@@ -131,7 +116,6 @@
     [self initNumLockKeyboard];
     //[self initPhoneLockKeyboard];
     isKeyBoardShow=YES;
-    
     
 }
 
@@ -186,7 +170,6 @@
             //            [self playSoundForKey:12];
         }
     }
-    
     
     //    [[SearchCoreManager share]Reset];
     ////    [self loadRecordData];
@@ -265,20 +248,11 @@
     }
 }
 
-- (void)hangup {
-    [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        _phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(M_PI*2);
-    } completion:^(BOOL finish){
-        [call end];
-    }];
-}
-
 - (void)makeBackspace {
     if (inputTF.text.length > 0) {
         inputTF.text = [inputTF.text substringToIndex:(inputTF.text.length - 1)];
         _numlockStr = [NSMutableString stringWithFormat:@"%@",[_numlockStr substringToIndex:(inputTF.text.length)]];
     }
 }
-
 
 @end
