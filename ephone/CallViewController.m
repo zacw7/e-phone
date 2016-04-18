@@ -10,7 +10,7 @@
 
 @implementation CallViewController {
     UILabel *statusLabel;
-    UILabel *callingNumLabel;
+    UILabel *callingAddressLabel;
     
     NSTimer *updateTimer;
     
@@ -26,9 +26,13 @@
     
     float volume, micVol;
     BOOL isMute, isHold, isVideo, isSpeaker;
+    
+    NSString *uriAddress;
+    NSString *callingNumber;
+    NSString *callingServer;
 }
 
-@synthesize callingNumber = _callingNumber;
+//@synthesize callingNumber = _callingNumber;
 @synthesize call = _call;
 
 - (void)viewDidLoad {
@@ -46,6 +50,12 @@
     micVol = _call.micVolume;
     updateTimer = nil;
     disconnectReason = INVALID_NUMBER;
+    uriAddress = [_call getAddress];
+    NSArray *array = [uriAddress componentsSeparatedByString:@"@"];
+    callingNumber = array[0];
+    callingServer = array[1];
+    if([callingServer isEqualToString:self.serverAddress]) callingServer = @"";
+    else callingServer = [@"@" stringByAppendingString:callingServer];
     [_call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
 }
 
@@ -57,16 +67,16 @@
     [test setBackgroundColor:[UIColor grayColor]]; //////////
     [self.view addSubview:test];
     
-    callingNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(test.frame.origin.x + test.frame.size.width + self.screenWidth*0.05,
+    callingAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(test.frame.origin.x + test.frame.size.width + self.screenWidth*0.05,
                                                            test.frame.origin.y,
                                                            self.screenWidth/2,
                                                            self.screenHeight*0.1 - 1)];
     //[callingNumLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    callingNumLabel.text = _callingNumber;
-    callingNumLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:callingNumLabel];
+    callingAddressLabel.text = [callingNumber stringByAppendingString:callingServer];
+    callingAddressLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:callingAddressLabel];
     
-    statusLabel = [[UILabel alloc] initWithFrame:callingNumLabel.frame];
+    statusLabel = [[UILabel alloc] initWithFrame:callingAddressLabel.frame];
     statusLabel.center = CGPointMake(statusLabel.center.x,
                                          statusLabel.center.y + test.frame.size.height - statusLabel.frame.size.height);
     //[statusLabel setBackgroundColor:[UIColor grayColor]]; //////////
@@ -181,6 +191,8 @@
         // Open Video
         isVideo = YES;
         [videoBtn.layer setBackgroundColor:[UIColor grayColor].CGColor];
+        
+        // TODO
     }
 }
 
@@ -259,11 +271,6 @@
             disconnectReason = HANGUP;
             if(!updateTimer)
                 updateTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerDone) userInfo:nil repeats:YES];
-            //            [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            //                UIImage *dial_unselected = [UIImage imageNamed:@"icon_phone_on.png"];
-            //                [phonePadView.dialBtn setImage:dial_unselected forState:UIControlStateNormal];
-            //            } completion:^(BOOL finish){
-            //            }];
         } break;
         case GSCallStatusReady: {
             NSLog(@"GSCallStatusReady");
@@ -279,14 +286,6 @@
             NSLog(@"GSCallStatusDisconnected");
             [self setEnabledOfAllButtons:NO];
             [_call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
-            //            [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            //                UIImage *dial_unselected = [UIImage imageNamed:@"icon_phone.png"];
-            //                [phonePadView.dialBtn setImage:dial_unselected forState:UIControlStateNormal];
-            //                phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(M_PI*2);
-            //            } completion:^(BOOL finish){
-            //                isCalling = NO;
-            //                isConnecting = NO;
-            //            }];
             [updateTimer invalidate];
             switch (disconnectReason) {
                 case INVALID_NUMBER:

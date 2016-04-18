@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qIh-rt-008">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--Login-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" userLabel="Login" customClass="LoginViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="6u1-Mh-fnB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1189.5" y="92"/>
+        </scene>
+        <!--Dial-->
+        <scene sceneID="HdI-B3-WbS">
+            <objects>
+                <viewController id="wnd-mT-lKR" userLabel="Dial" customClass="DialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aKq-W8-cwa"/>
+                        <viewControllerLayoutGuide type="bottom" id="q5v-mA-Sf7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HPJ-Aq-KjK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Dial" image="icon_phone.png" selectedImage="icon_phone_on.png" id="37a-uR-jlF" userLabel="Dial"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n2C-oJ-siK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2718" y="-644"/>
+        </scene>
+        <!--Contacts-->
+        <scene sceneID="weA-MR-FNh">
+            <objects>
+                <viewController id="gK3-9t-x7O" userLabel="Contacts" customClass="ContactsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HIC-IY-mO8"/>
+                        <viewControllerLayoutGuide type="bottom" id="qnt-2y-lNg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hti-CU-Dpr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="icon_contacts.png" selectedImage="icon_contacts_on.png" id="ldM-6Q-Pxd" userLabel="Contacts"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tF0-9a-gNS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2718" y="86"/>
+        </scene>
+        <!--ContactDetail-->
+        <scene sceneID="uWN-uC-IJh">
+            <objects>
+                <viewController id="1N8-Vk-GMh" userLabel="ContactDetail" customClass="ContactDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bJ5-Ri-YSp"/>
+                        <viewControllerLayoutGuide type="bottom" id="AZr-Up-Uh6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cD6-ff-OxX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MX5-Pf-Yz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3429" y="86"/>
+        </scene>
+        <!--Me-->
+        <scene sceneID="aaF-Ho-C9J">
+            <objects>
+                <viewController id="iJj-Ox-1oo" customClass="MeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qEK-df-mzt"/>
+                        <viewControllerLayoutGuide type="bottom" id="k8L-Cb-WDI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WzX-kI-dUW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Me" image="icon_my.png" selectedImage="icon_my_on.png" id="TlS-Pc-Ro8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="spF-9u-hHG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1947" y="831"/>
+        </scene>
+        <!--Main Tab Bar View Controller-->
+        <scene sceneID="EOR-nn-WzD">
+            <objects>
+                <tabBarController storyboardIdentifier="MainTabBarViewController" id="le6-j0-5Nk" customClass="MainTabBarViewController" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="i55-8n-WWG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="wnd-mT-lKR" kind="relationship" relationship="viewControllers" id="cf5-c2-AVi"/>
+                        <segue destination="gK3-9t-x7O" kind="relationship" relationship="viewControllers" id="OMQ-iz-yuf"/>
+                        <segue destination="iJj-Ox-1oo" kind="relationship" relationship="viewControllers" id="b5a-L3-cAS"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kb1-bi-9Bi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1947" y="92"/>
+        </scene>
+        <!--Signup-->
+        <scene sceneID="lfU-P5-sYu">
+            <objects>
+                <viewController storyboardIdentifier="SignupViewController" title="Signup" id="G3X-vU-13b" customClass="SignupViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hmC-O8-gYO"/>
+                        <viewControllerLayoutGuide type="bottom" id="PDP-z6-Whc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e1M-W1-SAC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdc-y9-OE2">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="143" y="166" width="114" height="21"/>
+                                </variation>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nbb-g9-q84" userLabel="usernameTF">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="75" y="195" width="252" height="30"/>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fNm-RU-f1l">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="165" y="306" width="71" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="cancel:" destination="G3X-vU-13b" eventType="touchUpInside" id="MuP-DI-BKa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzm-w7-Fdg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="177" y="268" width="46" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="save:" destination="G3X-vU-13b" eventType="touchUpInside" id="OcB-7O-SJq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="mdc-y9-OE2"/>
+                                <exclude reference="Nbb-g9-q84"/>
+                                <exclude reference="fNm-RU-f1l"/>
+                                <exclude reference="gzm-w7-Fdg"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="mdc-y9-OE2"/>
+                                <include reference="Nbb-g9-q84"/>
+                                <include reference="fNm-RU-f1l"/>
+                                <include reference="gzm-w7-Fdg"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="eBM-Hd-PIc"/>
+                    <connections>
+                        <outlet property="usernameTF" destination="Nbb-g9-q84" id="Bx1-8r-88f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tdx-Qz-SnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1189.5" y="838"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="MwT-Qw-SRP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qIh-rt-008" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="scZ-zb-oo5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="gvr-TP-YeM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Uv-Ny-EVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="441" y="92"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VXc-pp-xlh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="k4U-xw-QGw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xkc-jH-Cj9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="G3X-vU-13b" kind="relationship" relationship="rootViewController" id="qwJ-FJ-Lsl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ulg-YS-DOj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="441" y="838"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon_contacts.png" width="30" height="30"/>
+        <image name="icon_contacts_on.png" width="30" height="30"/>
+        <image name="icon_my.png" width="30" height="30"/>
+        <image name="icon_my_on.png" width="30" height="30"/>
+        <image name="icon_phone.png" width="30" height="30"/>
+        <image name="icon_phone_on.png" width="30" height="30"/>
+    </resources>
+</document>

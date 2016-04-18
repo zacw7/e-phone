@@ -1,0 +1,3 @@
+[submodule "gossip"]
+	path = gossip
+	url = https://github.com/Zeoh/gossip.git

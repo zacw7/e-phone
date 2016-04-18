@@ -11,7 +11,6 @@
 #import "PhonePadView.h"
 #import "NumberButton.h"
 
-#import "Gossip.h"
 
 @protocol DialDelegate <NSObject>
 @optional

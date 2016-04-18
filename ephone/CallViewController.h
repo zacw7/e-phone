@@ -20,7 +20,7 @@ typedef enum
 
 @interface CallViewController : BaseViewController
 
-@property (strong, nonatomic) NSString *callingNumber;
+//@property (strong, nonatomic) NSString *callingNumber;
 @property (strong, nonatomic) GSCall *call;
 
 @end

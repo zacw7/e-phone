@@ -47,7 +47,6 @@
     _meVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:3];
     
     self.viewControllers = @[_dialVC, _contactsVC, _meVC];
-    //self.customizableViewControllers = @[_dialVC, _contactsVC, _meVC];
     [self setSelectedIndex:0];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
@@ -73,7 +72,6 @@
     else return;
     NSLog(@"ReceiveIncomingCall");
     call = incomingCall;
-    NSString *remote_info_uri = [call getAddress];
     UIAlertView *alert = [[UIAlertView alloc] init];
     [alert setAlertViewStyle:UIAlertViewStyleDefault];
     [alert setDelegate:self];
@@ -147,7 +145,7 @@
 
 - (void)presentCallViewController {
     CallViewController *callVC = [CallViewController new];
-    callVC.callingNumber = callingNumber;
+    //callVC.callingNumber = callingNumber;
     callVC.call = call;
     [call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
     [self presentViewController:callVC animated:YES completion:^{
