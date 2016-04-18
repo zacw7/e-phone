@@ -70,7 +70,7 @@
     statusLabel.center = CGPointMake(statusLabel.center.x,
                                          statusLabel.center.y + test.frame.size.height - statusLabel.frame.size.height);
     //[statusLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    statusLabel.text = @"Calling...";
+    statusLabel.text = @"Connecting...";
     statusLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:statusLabel];
     
@@ -201,7 +201,6 @@
 
 - (void)hangupBtnClicked {
     disconnectReason = HANGUP;
-    [self setEnabledOfAllButtons:NO];
     [_call end];
 }
 
@@ -257,6 +256,7 @@
         case GSCallStatusConnected: {
             NSLog(@"GSCallStatusConnected");
             [self setEnabledOfAllButtons:YES];
+            disconnectReason = HANGUP;
             if(!updateTimer)
                 updateTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerDone) userInfo:nil repeats:YES];
             //            [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -277,6 +277,7 @@
         } break;
         case GSCallStatusDisconnected: {
             NSLog(@"GSCallStatusDisconnected");
+            [self setEnabledOfAllButtons:NO];
             [_call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
             //            [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
             //                UIImage *dial_unselected = [UIImage imageNamed:@"icon_phone.png"];

@@ -244,7 +244,7 @@
 #pragma mark - Dial Button is clicked
 - (void)dialBtnClicked {
     if (![inputTF.text isEqualToString:@""] && _delegate) {
-        [_delegate makeCall:inputTF.text];
+        [_delegate makeDial:inputTF.text];
     }
 }
 

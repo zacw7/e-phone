@@ -11,6 +11,7 @@
 @implementation MainTabBarViewController {
     GSCall *call;
     NSString *callingNumber;
+    BOOL isReceivingCall;
 }
 
 @synthesize agent = _agent;
@@ -37,6 +38,7 @@
     _account.delegate = self;
     
     callingNumber = @"";
+    isReceivingCall = YES;
 }
 
 - (void)initViews {
@@ -51,32 +53,27 @@
     
     self.logoutIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.logoutIndicatorView.center = self.view.center;
-    NSLog(@"Center: %f, %f", self.logoutIndicatorView.center.x, self.logoutIndicatorView.center.y);
+    NSLog(@"Center: %f, %f", self.logoutIndicatorView.center.x, self.logoutIndicatorView.center.y);  ///////////
     [self.view addSubview: self.logoutIndicatorView];
 }
 
 #pragma mark - DialDelegate
-- (void)makeCall:(NSString*) dialNumber {
+- (void)makeDial:(NSString*) dialNumber {
     if([dialNumber isEqualToString:@""]) return;
     callingNumber = dialNumber;
     NSString *address = [[callingNumber stringByAppendingString:@"@"] stringByAppendingString:self.serverAddress]; /////
     NSLog(@"Make a call: %@", address); /////
-    
     call = [GSCall outgoingCallToUri:address fromAccount:_account];
-    [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.dialVC.phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(M_PI*3/4);
-    } completion:^(BOOL finish){
-        [call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
-        [call begin];
-        [self.dialVC.phonePadView.dialBtn setEnabled:NO];
-        [self presentCallViewController];
-    }];
+    [self makeCall];
 }
 
 #pragma mark - GSAccountDelegate
 - (void)account:(GSAccount *)account didReceiveIncomingCall:(GSCall *)incomingCall {
+    if(isReceivingCall) isReceivingCall = NO;
+    else return;
     NSLog(@"ReceiveIncomingCall");
     call = incomingCall;
+    NSString *remote_info_uri = [call getAddress];
     UIAlertView *alert = [[UIAlertView alloc] init];
     [alert setAlertViewStyle:UIAlertViewStyleDefault];
     [alert setDelegate:self];
@@ -98,12 +95,24 @@
 }
 
 - (void)userDidPickupCall {
-    [self presentCallViewController];
+    [self makeCall];
 }
 
 - (void)userDidDenyCall {
     [call end];
     call = nil;
+}
+
+- (void)makeCall {
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.dialVC.phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(M_PI*3/4);
+    } completion:^(BOOL finish){
+        [call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
+        [call begin];
+        [self.dialVC.phonePadView.dialBtn setEnabled:NO];
+        [self presentCallViewController];
+        isReceivingCall = YES;
+    }];
 }
 
 #pragma mark - KVO
