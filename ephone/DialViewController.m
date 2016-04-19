@@ -29,12 +29,9 @@
     //是否开启热点视图
     BOOL isHotPointOn;
     // Call
-    GSCall *call;
+    //GSCall *call;
     
     UILabel *callStatusLabel;
-    
-    //MainTabBarViewController
-    //MainTabBarViewController *tabBarController;
 }
 
 @synthesize delegate = _delegate;
@@ -47,7 +44,7 @@
 }
 
 - (void)initData {
-    //tabBarController = (MainTabBarViewController*)self.tabBarController;
+
 }
 
 - (void)initViews{

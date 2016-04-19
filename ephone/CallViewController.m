@@ -27,9 +27,10 @@
     float volume, micVol;
     BOOL isMute, isHold, isVideo, isSpeaker;
     
-    NSString *uriAddress;
-    NSString *callingNumber;
-    NSString *callingServer;
+    NSString *remoteUriAddress;
+    NSString *remoteType;
+    NSString *remoteAccount;
+    NSString *remoteAddress;
 }
 
 //@synthesize callingNumber = _callingNumber;
@@ -50,12 +51,13 @@
     micVol = _call.micVolume;
     updateTimer = nil;
     disconnectReason = INVALID_NUMBER;
-    uriAddress = [_call getAddress];
-    NSArray *array = [uriAddress componentsSeparatedByString:@"@"];
-    callingNumber = array[0];
-    callingServer = array[1];
-    if([callingServer isEqualToString:self.serverAddress]) callingServer = @"";
-    else callingServer = [@"@" stringByAppendingString:callingServer];
+    remoteUriAddress = [_call getRemoteUri];
+    NSArray *array = [remoteUriAddress componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<:@>"]];
+    int shift = 0;
+    if([array[0] isEqualToString:@""]) shift = 1;
+    remoteType = array[0+shift];
+    remoteAccount = array[1+shift];
+    remoteAddress = array[2+shift];
     [_call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
 }
 
@@ -72,7 +74,8 @@
                                                            self.screenWidth/2,
                                                            self.screenHeight*0.1 - 1)];
     //[callingNumLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    callingAddressLabel.text = [callingNumber stringByAppendingString:callingServer];
+    if([remoteAddress isEqualToString:self.serverAddress]) callingAddressLabel.text = remoteAccount;
+    else callingAddressLabel.text = [[remoteAccount stringByAppendingString:@"@"] stringByAppendingString:remoteAddress];
     callingAddressLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:callingAddressLabel];
     

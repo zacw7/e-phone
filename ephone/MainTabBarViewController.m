@@ -60,8 +60,7 @@
 - (void)makeDial:(NSString*) dialNumber {
     if([dialNumber isEqualToString:@""]) return;
     callingNumber = dialNumber;
-    NSString *address = [[callingNumber stringByAppendingString:@"@"] stringByAppendingString:self.serverAddress]; /////
-    NSLog(@"Make a call: %@", address); /////
+    NSString *address = [[callingNumber stringByAppendingString:@"@"] stringByAppendingString:self.serverAddress];
     call = [GSCall outgoingCallToUri:address fromAccount:_account];
     [self makeCall];
 }

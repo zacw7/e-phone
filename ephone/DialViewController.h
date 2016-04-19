@@ -11,7 +11,6 @@
 #import "PhonePadView.h"
 #import "NumberButton.h"
 
-
 @protocol DialDelegate <NSObject>
 @optional
 - (void)makeDial:(NSString*) dialNumber;

@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79081BBE1CC5C3B500486F97 /* libGossip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AABA1CC4E14C0016181C /* libGossip.a */; };
+		79081BBF1CC5C41E00486F97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA8A1CC4BC440016181C /* UIKit.framework */; };
 		7934A9C01CC4B2760016181C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7934A9BF1CC4B2760016181C /* main.m */; };
 		7934A9C31CC4B2760016181C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7934A9C21CC4B2760016181C /* AppDelegate.m */; };
 		7934A9C91CC4B2760016181C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7934A9C71CC4B2760016181C /* Main.storyboard */; };
-		7934A9CE1CC4B2760016181C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7934A9CC1CC4B2760016181C /* LaunchScreen.storyboard */; };
 		7934AA0E1CC4B32A0016181C /* bg_button_call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7934A9D91CC4B32A0016181C /* bg_button_call.png */; };
 		7934AA0F1CC4B32A0016181C /* bg_no_call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7934A9DA1CC4B32A0016181C /* bg_no_call.png */; };
 		7934AA101CC4B32A0016181C /* bg_no_cantacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 7934A9DB1CC4B32A0016181C /* bg_no_cantacts.png */; };
@@ -87,9 +88,32 @@
 		7934AA851CC4BC360016181C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA841CC4BC360016181C /* CFNetwork.framework */; };
 		7934AA871CC4BC3A0016181C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA861CC4BC3A0016181C /* CoreGraphics.framework */; };
 		7934AA891CC4BC3F0016181C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA881CC4BC3F0016181C /* Foundation.framework */; };
-		7934AA8B1CC4BC440016181C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA8A1CC4BC440016181C /* UIKit.framework */; };
 		7934AAA31CC4BCEA0016181C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7934AAA21CC4BCEA0016181C /* Images.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7934AAB91CC4E14C0016181C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 22AD824315A5987C0000D05C;
+			remoteInfo = Gossip;
+		};
+		7934AABB1CC4E14C0016181C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 224EFF8C15A6D27600CD541C;
+			remoteInfo = GossipExample;
+		};
+		7934AAC01CC4E2280016181C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 22AD824215A5987C0000D05C;
+			remoteInfo = Gossip;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		7934A9BB1CC4B2760016181C /* ephone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ephone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,7 +121,6 @@
 		7934A9C11CC4B2760016181C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7934A9C21CC4B2760016181C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7934A9C81CC4B2760016181C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7934A9CD1CC4B2760016181C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7934A9CF1CC4B2760016181C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7934A9D91CC4B32A0016181C /* bg_button_call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_button_call.png; sourceTree = "<group>"; };
 		7934A9DA1CC4B32A0016181C /* bg_no_call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_no_call.png; sourceTree = "<group>"; };
@@ -189,6 +212,7 @@
 		7934AA881CC4BC3F0016181C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7934AA8A1CC4BC440016181C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7934AAA21CC4BCEA0016181C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gossip.xcodeproj; path = gossip/Gossip.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79081BBE1CC5C3B500486F97 /* libGossip.a in Frameworks */,
 				7934AA811CC4BC2B0016181C /* AVFoundation.framework in Frameworks */,
 				7934AA7F1CC4BC260016181C /* AudioToolbox.framework in Frameworks */,
 				7934AA871CC4BC3A0016181C /* CoreGraphics.framework in Frameworks */,
@@ -204,7 +229,7 @@
 				7934AA7D1CC4BC1F0016181C /* CoreVideo.framework in Frameworks */,
 				7934AA851CC4BC360016181C /* CFNetwork.framework in Frameworks */,
 				7934AA891CC4BC3F0016181C /* Foundation.framework in Frameworks */,
-				7934AA8B1CC4BC440016181C /* UIKit.framework in Frameworks */,
+				79081BBF1CC5C41E00486F97 /* UIKit.framework in Frameworks */,
 				7934AA781CC4BC160016181C /* AddressBook.framework in Frameworks */,
 				7934AA791CC4BC160016181C /* AddressBookUI.framework in Frameworks */,
 			);
@@ -216,6 +241,7 @@
 		7934A9B21CC4B2760016181C = {
 			isa = PBXGroup;
 			children = (
+				7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */,
 				7934AA8C1CC4BC510016181C /* Frameworks */,
 				7934A9BD1CC4B2760016181C /* ephone */,
 				7934A9BC1CC4B2760016181C /* Products */,
@@ -238,7 +264,6 @@
 				7934A9C11CC4B2760016181C /* AppDelegate.h */,
 				7934A9C21CC4B2760016181C /* AppDelegate.m */,
 				7934A9C71CC4B2760016181C /* Main.storyboard */,
-				7934A9CC1CC4B2760016181C /* LaunchScreen.storyboard */,
 				7934A9CF1CC4B2760016181C /* Info.plist */,
 				7934AA711CC4BB9A0016181C /* me.plist */,
 				7934AAA21CC4BCEA0016181C /* Images.xcassets */,
@@ -388,6 +413,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7934AAB51CC4E14C0016181C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7934AABA1CC4E14C0016181C /* libGossip.a */,
+				7934AABC1CC4E14C0016181C /* GossipExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -402,6 +436,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7934AAC11CC4E2280016181C /* PBXTargetDependency */,
 			);
 			name = ephone;
 			productName = ephone;
@@ -434,12 +469,35 @@
 			mainGroup = 7934A9B21CC4B2760016181C;
 			productRefGroup = 7934A9BC1CC4B2760016181C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7934AAB51CC4E14C0016181C /* Products */;
+					ProjectRef = 7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				7934A9BA1CC4B2760016181C /* ephone */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7934AABA1CC4E14C0016181C /* libGossip.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGossip.a;
+			remoteRef = 7934AAB91CC4E14C0016181C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7934AABC1CC4E14C0016181C /* GossipExample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = GossipExample.app;
+			remoteRef = 7934AABB1CC4E14C0016181C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7934A9B91CC4B2760016181C /* Resources */ = {
@@ -459,7 +517,6 @@
 				7934AA201CC4B32A0016181C /* icon_keyboard_0.png in Resources */,
 				7934AA2F1CC4B32A0016181C /* icon_keyboard_rollback.png in Resources */,
 				7934AA721CC4BB9A0016181C /* me.plist in Resources */,
-				7934A9CE1CC4B2760016181C /* LaunchScreen.storyboard in Resources */,
 				7934AA391CC4B32A0016181C /* icon_phone.png in Resources */,
 				7934AAA31CC4BCEA0016181C /* Images.xcassets in Resources */,
 				7934AA1A1CC4B32A0016181C /* icon_contacts.png in Resources */,
@@ -532,6 +589,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7934AAC11CC4E2280016181C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Gossip;
+			targetProxy = 7934AAC01CC4E2280016181C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		7934A9C71CC4B2760016181C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -541,21 +606,13 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		7934A9CC1CC4B2760016181C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7934A9CD1CC4B2760016181C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7934A9D01CC4B2760016181C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -572,6 +629,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -588,7 +646,26 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/gossip/pjsip/src/pjlib/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjlib-util/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjmedia/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjnath/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjsip/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/resample/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/speex/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/crypto/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/include",
+					"$(SRCROOT)/gossip/Gossip",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/gossip/pjsip/lib\"",
+					"\"$(SRCROOT)/gossip/pjsip\"",
+					"\"$(SRCROOT)/gossip/pjsip/src/third_party/lib\"",
+					"\"$(SRCROOT)/gossip/Gossip\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -598,7 +675,7 @@
 		7934A9D11CC4B2760016181C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -615,6 +692,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -625,7 +703,26 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/gossip/pjsip/src/pjlib/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjlib-util/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjmedia/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjnath/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjsip/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/resample/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/speex/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/crypto/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/include",
+					"$(SRCROOT)/gossip/Gossip",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/gossip/pjsip/lib\"",
+					"\"$(SRCROOT)/gossip/pjsip\"",
+					"\"$(SRCROOT)/gossip/pjsip/src/third_party/lib\"",
+					"\"$(SRCROOT)/gossip/Gossip\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -638,9 +735,30 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/gossip/pjsip/src/pjlib/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjlib-util/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjmedia/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjnath/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjsip/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/resample/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/speex/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/crypto/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/include",
+					"$(SRCROOT)/gossip/Gossip",
+				);
 				INFOPLIST_FILE = ephone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/gossip/pjsip/lib\"",
+					"\"$(SRCROOT)/gossip/pjsip\"",
+					"\"$(SRCROOT)/gossip/pjsip/src/third_party/lib\"",
+					"\"$(SRCROOT)/gossip/Gossip\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeoh.ephone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -652,9 +770,30 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/gossip/pjsip/src/pjlib/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjlib-util/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjmedia/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjnath/include",
+					"$(SRCROOT)/gossip/pjsip/src/pjsip/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/resample/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/speex/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/crypto/include",
+					"$(SRCROOT)/gossip/pjsip/src/third_party/srtp/include",
+					"$(SRCROOT)/gossip/Gossip",
+				);
 				INFOPLIST_FILE = ephone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/gossip/pjsip/lib\"",
+					"\"$(SRCROOT)/gossip/pjsip\"",
+					"\"$(SRCROOT)/gossip/pjsip/src/third_party/lib\"",
+					"\"$(SRCROOT)/gossip/Gossip\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeoh.ephone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

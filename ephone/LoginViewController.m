@@ -95,15 +95,6 @@
 #pragma mark - Button Event Handler
 
 - (void)loginEventHandler {
-    //////////////////////
-    //     FOR TEST     //
-    //////////////////////
-//    [self presentMainViewController];
-//    return;
-    /////////////////////
-    /////////////////////
-    
-    
     NSString *username = self.usernameTF.text;
     NSString *password = self.passwordTF.text;
     if([username isEqualToString:@""]) {
@@ -192,7 +183,7 @@
     [UIView setAnimationDelegate:self];
     CGPoint newCenter = self.bgView.center;
     newCenter.y += 100;
-    self.bgView.center = self.orginCenter;//orginCenter;
+    self.bgView.center = self.orginCenter;
     [UIView commitAnimations];
 }
 
