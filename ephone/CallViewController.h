@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 
 #import "Gossip.h"
 
@@ -18,7 +18,7 @@ typedef enum
     HANGUP
 } DisconnectReason;
 
-@interface CallViewController : BaseViewController
+@interface CallViewController : UIViewController
 
 //@property (strong, nonatomic) NSString *callingNumber;
 @property (strong, nonatomic) GSCall *call;

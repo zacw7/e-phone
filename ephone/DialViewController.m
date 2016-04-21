@@ -50,7 +50,7 @@
 - (void)initViews{
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    callStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth*0.8, self.screenHeight*0.1)];
+    callStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.1)];
     callStatusLabel.center = CGPointMake(self.view.center.x, self.view.center.y*0.2);
     [callStatusLabel setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:callStatusLabel];
@@ -58,12 +58,12 @@
     callStatusLabel.text = @"initial";
     
     UIImageView *noRecordImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    noRecordImageView.center = CGPointMake(self.screenWidth/2, self.screenHeight/2-40);
+    noRecordImageView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-40);
     noRecordImageView.image = [UIImage imageNamed:@"bg_no_call.png"];
     [self.view addSubview:noRecordImageView];
     
     UILabel *noRecordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 240, 20)];
-    noRecordLabel.center = CGPointMake(self.screenWidth/2, self.screenHeight/2 - 40 + noRecordImageView.frame.size.height);
+    noRecordLabel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 40 + noRecordImageView.frame.size.height);
     noRecordLabel.text = @"No Record";
     noRecordLabel.textAlignment = NSTextAlignmentCenter;
     noRecordLabel.textColor = [UIColor lightGrayColor];
@@ -79,30 +79,14 @@
 }
 
 - (void)initKeyboard {
-    int keyboardHeight=300;
-    if (self.screenHeight==568) {
-        keyboardHeight=300;
-    }else if (self.screenHeight==667){
-        keyboardHeight=320;
-    }else if (self.screenHeight==736){
-        keyboardHeight=360;
-    }else{
-        keyboardHeight=240;
-    }
-    
-    float btnHeight = keyboardHeight/6.5;
-    float btnWidth = contentView.frame.size.width/3;
-    _w = btnWidth;
-    _h = btnHeight;
-//    for (int i = 0; i < 6; i++) {
-//        UIView *view1 = [[UIView alloc]init];
-//        view1.frame = CGRectMake(0, 0.5 + contentView.frame.size.height /6 * i, 500,0.5);
-//        view1.backgroundColor = [UIColor grayColor];
-//        view1.alpha = 0.3;
-//        [contentView addSubview:view1];
-//    }
+
+    _w = contentView.frame.size.width/3;
+    _h = SCREEN_HEIGHT*0.08;
+
     //设置输入框
-    inputTF = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, contentView.frame.size.width, btnHeight)];
+    inputTF = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, contentView.frame.size.width, SCREEN_HEIGHT*0.08)];
+    inputTF.clearButtonMode = UITextFieldViewModeAlways;
+    inputTF.userInteractionEnabled = NO;
     inputTF.delegate = self;
     inputTF.textAlignment = 1;
     inputTF.placeholder = @"请输入电话号码";
@@ -111,9 +95,7 @@
     
     _numlockStr = [[NSMutableString alloc] init];
     [self initNumLockKeyboard];
-    //[self initPhoneLockKeyboard];
     isKeyBoardShow=YES;
-    
 }
 
 //添加拨号键盘键按钮

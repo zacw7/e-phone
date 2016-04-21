@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 #import "CustomTableViewCell.h"
 
-@interface MeViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *listMe;

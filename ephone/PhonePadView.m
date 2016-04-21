@@ -15,8 +15,7 @@
 @synthesize dialBtn;
 @synthesize backsapceBtn;
 
-- (id)initWithView:(UIView *) contentview parentView :(UIView *) parentview;
-{
+- (id)initWithView:(UIView *) contentview parentView :(UIView *) parentview {
     self = [super initWithFrame:CGRectMake(0,0,contentview.frame.size.width, contentview.frame.size.height+40)];
     if (self) {
         // Initialization code
@@ -59,14 +58,11 @@
         [self addGestureRecognizer:panRcognize];
         
         //单击的手势
-        UITapGestureRecognizer *tapRecognize = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
-        tapRecognize.numberOfTapsRequired = 1;
-        tapRecognize.delegate = self;
-        [tapRecognize setEnabled :YES];
-        [tapRecognize delaysTouchesBegan];
-        [tapRecognize cancelsTouchesInView];
-        
-        [self addGestureRecognizer:tapRecognize];
+        UIButton *transparentBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [transparentBtn setFrame:arrow.frame];
+        transparentBtn.backgroundColor = [UIColor clearColor];
+        [transparentBtn addTarget:self action:@selector(handleTap:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:transparentBtn];
         
         //设置两个位置的坐标
         downPoint = CGPointMake(parentview.frame.size.width/2, parentview.frame.size.height+contentview.frame.size.height/2-120);
@@ -95,7 +91,6 @@
     }
     return self;
 }
-
 
 #pragma UIGestureRecognizer Handles
 /*

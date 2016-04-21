@@ -64,17 +64,17 @@
 - (void)initViews {
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    UILabel *test = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.screenHeight*0.15, self.screenHeight*0.15)];
-    test.center = CGPointMake(self.screenWidth*0.25, self.screenHeight*0.2);
+    UILabel *test = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT*0.15, SCREEN_HEIGHT*0.15)];
+    test.center = CGPointMake(SCREEN_WIDTH*0.25, SCREEN_HEIGHT*0.2);
     [test setBackgroundColor:[UIColor grayColor]]; //////////
     [self.view addSubview:test];
     
-    callingAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(test.frame.origin.x + test.frame.size.width + self.screenWidth*0.05,
+    callingAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(test.frame.origin.x + test.frame.size.width + SCREEN_WIDTH*0.05,
                                                            test.frame.origin.y,
-                                                           self.screenWidth/2,
-                                                           self.screenHeight*0.1 - 1)];
+                                                           SCREEN_WIDTH/2,
+                                                           SCREEN_HEIGHT*0.1 - 1)];
     //[callingNumLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    if([remoteAddress isEqualToString:self.serverAddress]) callingAddressLabel.text = remoteAccount;
+    if([remoteAddress isEqualToString:SERVER_ADDRESS]) callingAddressLabel.text = remoteAccount;
     else callingAddressLabel.text = [[remoteAccount stringByAppendingString:@"@"] stringByAppendingString:remoteAddress];
     callingAddressLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:callingAddressLabel];
@@ -87,10 +87,10 @@
     statusLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:statusLabel];
     
-    float btnSide = self.screenWidth*0.25-1;
+    float btnSide = SCREEN_WIDTH*0.25-1;
     
     muteBtn = [[UIButton alloc] initWithFrame:CGRectMake(test.frame.origin.x,
-                                                         test.frame.origin.y + test.frame.size.height + self.screenHeight*0.06,
+                                                         test.frame.origin.y + test.frame.size.height + SCREEN_HEIGHT*0.06,
                                                          btnSide*1.5, btnSide)];
     [muteBtn.layer setCornerRadius:0];
     [muteBtn.layer setBackgroundColor:[UIColor blackColor].CGColor];
@@ -131,7 +131,7 @@
     [self.view addSubview:speakerBtn];
     
     hangupBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnSide*3, btnSide)];
-    hangupBtn.center = CGPointMake(self.screenWidth/2 - 3, videoBtn.center.y + btnSide + self.screenHeight*0.06);
+    hangupBtn.center = CGPointMake(SCREEN_WIDTH/2 - 3, videoBtn.center.y + btnSide + SCREEN_HEIGHT*0.06);
     [hangupBtn.layer setCornerRadius:0];
     [hangupBtn.layer setBackgroundColor:[UIColor redColor].CGColor];
     [hangupBtn.layer setBorderColor:[UIColor whiteColor].CGColor];

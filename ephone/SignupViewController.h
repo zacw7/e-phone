@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 
-@interface SignupViewController : BaseViewController <UITextFieldDelegate>
+@interface SignupViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTF;
 

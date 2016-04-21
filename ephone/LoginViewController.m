@@ -35,7 +35,7 @@
     self.navigationController.navigationBar.hidden=YES;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.1 green:0.5 blue:0.75 alpha:1]];
     
-    self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, self.screenHeight*0.7)];
+    self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.7)];
     [self.bgView setBackgroundColor:[UIColor colorWithRed:0.1 green:0.5 blue:0.75 alpha:1]];
     self.orginCenter = self.bgView.center;
     [self.view addSubview:self.bgView];
@@ -44,8 +44,8 @@
     [hideKeyboardButton addTarget:self action:@selector(hideKeyboardEventHandler) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:hideKeyboardButton];
     
-    self.usernameTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth*0.8, 45)];
-    [self.usernameTF setCenter:CGPointMake(self.screenWidth/2, self.screenHeight*0.4)];
+    self.usernameTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.8, 45)];
+    [self.usernameTF setCenter:CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.4)];
     [self.usernameTF setBackgroundColor:[UIColor whiteColor]];
     self.usernameTF.placeholder = @"username";
     self.usernameTF.returnKeyType = UIReturnKeyNext;
@@ -53,8 +53,8 @@
     self.usernameTF.delegate = self;
     [self.bgView addSubview:self.usernameTF];
     
-    self.passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth*0.8, 45)];
-    [self.passwordTF setCenter:CGPointMake(self.screenWidth/2, self.screenHeight*0.4+self.usernameTF.frame.size.height+1)];
+    self.passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.8, 45)];
+    [self.passwordTF setCenter:CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.4+self.usernameTF.frame.size.height+1)];
     [self.passwordTF setBackgroundColor:[UIColor whiteColor]];
     self.passwordTF.placeholder = @"password";
     self.passwordTF.returnKeyType = UIReturnKeyDone;
@@ -63,8 +63,8 @@
     self.passwordTF.delegate = self;
     [self.bgView addSubview:self.passwordTF];
     
-    self.loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth*0.8, 45)];
-    [self.loginBtn setCenter:CGPointMake(self.screenWidth/2, self.screenHeight*0.4+self.usernameTF.frame.size.height+self.passwordTF.frame.size.height+2)];
+    self.loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.8, 45)];
+    [self.loginBtn setCenter:CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.4+self.usernameTF.frame.size.height+self.passwordTF.frame.size.height+2)];
     [self.loginBtn setBackgroundColor:[UIColor whiteColor]];
     [self.loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.loginBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
@@ -75,7 +75,7 @@
     self.invalidUserInfoAlertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Wrong password or username" delegate:self cancelButtonTitle:@"Forget password?" otherButtonTitles:@"Retry", nil];
     
     self.logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 184, 43)];
-    [self.logoImage setCenter:CGPointMake(self.screenWidth/2, self.screenHeight*0.25)];
+    [self.logoImage setCenter:CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.25)];
     self.logoImage.image = [UIImage imageNamed:@"logo_head.png"];
     [self.view addSubview:self.logoImage];
     
@@ -111,10 +111,10 @@
     
     [self.loginIndicatorView startAnimating];
     GSAccountConfiguration *newAccount = [GSAccountConfiguration defaultConfiguration];
-    newAccount.address = [[username stringByAppendingString:@"@"] stringByAppendingString:self.serverAddress];
+    newAccount.address = [[username stringByAppendingString:@"@"] stringByAppendingString:SERVER_ADDRESS];
     newAccount.username = username;
     newAccount.password = password;
-    newAccount.domain = self.serverAddress;
+    newAccount.domain = SERVER_ADDRESS;
     
     GSConfiguration *configuration = [GSConfiguration defaultConfiguration];
     configuration.account = newAccount;
@@ -249,7 +249,7 @@
     if(loginEvent == NO) return;
     MainTabBarViewController *mainTabBarViewController = [MainTabBarViewController new];
     mainTabBarViewController.username = self.usernameTF.text;
-    mainTabBarViewController.serverAddress = self.serverAddress;
+    mainTabBarViewController.serverAddress = SERVER_ADDRESS;
     [self.loginIndicatorView stopAnimating];
     [self presentViewController:mainTabBarViewController animated:YES completion:^{
         [self.loginBtn setEnabled:YES];

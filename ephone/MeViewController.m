@@ -26,7 +26,7 @@
 }
 
 - (void) initViews {
-    UILabel *userInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth*0.9, self.screenHeight*0.2)];
+    UILabel *userInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.2)];
     [userInfoLabel setBackgroundColor:[UIColor lightGrayColor]];
     userInfoLabel.center = CGPointMake(self.view.center.x, self.view.center.y*0.4);
     //userInfoLabel.text = tabBarController.username;
@@ -36,7 +36,7 @@
     [self.view addSubview:self.tableView];
     
     /////////////////////
-    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(0, self.screenHeight*0.3, self.screenWidth*0.2, self.screenHeight*0.1)];
+    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.2, SCREEN_HEIGHT*0.1)];
     [exit setBackgroundColor:[UIColor redColor]];
     [exit addTarget:self.tabBarController action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     [exit setTitle:@"Log Out" forState:UIControlStateNormal];

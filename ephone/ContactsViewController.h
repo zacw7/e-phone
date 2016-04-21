@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 #import "ContactDetailViewController.h"
 
-@interface ContactsViewController : BaseViewController <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface ContactsViewController : UIViewController <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *listContacts;

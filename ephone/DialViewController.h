@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 #import "PhonePadView.h"
 #import "NumberButton.h"
 
@@ -16,7 +16,7 @@
 - (void)makeDial:(NSString*) dialNumber;
 @end
 
-@interface DialViewController : BaseViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface DialViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) id<DialDelegate> delegate;
 

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Constants.h"
 
-@interface ContactDetailViewController : BaseViewController
+@interface ContactDetailViewController : UIViewController
 
 @property (weak, nonatomic) NSNumber *personIDAsNumber;
 

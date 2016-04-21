@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
 #import "Gossip.h"
-
+#import "Constants.h"
 #import "MainTabBarViewController.h"
 
-@interface LoginViewController : BaseViewController <UITextFieldDelegate, UIAlertViewDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UITextField *usernameTF;
