@@ -88,8 +88,11 @@
 		7934AA871CC4BC3A0016181C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA861CC4BC3A0016181C /* CoreGraphics.framework */; };
 		7934AA891CC4BC3F0016181C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA881CC4BC3F0016181C /* Foundation.framework */; };
 		7934AAA31CC4BCEA0016181C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7934AAA21CC4BCEA0016181C /* Images.xcassets */; };
-		794946CD1CC8705B008EA743 /* PhoneRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946CC1CC8705B008EA743 /* PhoneRecordModel.m */; };
+		794946CD1CC8705B008EA743 /* CallRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946CC1CC8705B008EA743 /* CallRecordModel.m */; };
 		794946D21CC872CC008EA743 /* DBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946D11CC872CC008EA743 /* DBUtil.m */; };
+		79913C6F1CC9C95F002D6B30 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */; };
+		79913C741CC9EFF9002D6B30 /* CallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */; };
+		79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,11 +215,16 @@
 		7934AA8A1CC4BC440016181C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7934AAA21CC4BCEA0016181C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gossip.xcodeproj; path = gossip/Gossip.xcodeproj; sourceTree = "<group>"; };
-		794946CB1CC8705B008EA743 /* PhoneRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneRecordModel.h; sourceTree = "<group>"; };
-		794946CC1CC8705B008EA743 /* PhoneRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneRecordModel.m; sourceTree = "<group>"; };
+		794946CB1CC8705B008EA743 /* CallRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallRecordModel.h; sourceTree = "<group>"; };
+		794946CC1CC8705B008EA743 /* CallRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallRecordModel.m; sourceTree = "<group>"; };
 		794946D01CC872CC008EA743 /* DBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBUtil.h; sourceTree = "<group>"; };
 		794946D11CC872CC008EA743 /* DBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBUtil.m; sourceTree = "<group>"; };
 		794946D41CC874A4008EA743 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		79913C721CC9EFF9002D6B30 /* CallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableViewCell.h; sourceTree = "<group>"; };
+		79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableViewCell.m; sourceTree = "<group>"; };
+		79913C771CCA11F1002D6B30 /* ExpandedCallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedCallTableViewCell.h; sourceTree = "<group>"; };
+		79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedCallTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +232,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79913C6F1CC9C95F002D6B30 /* libsqlite3.tbd in Frameworks */,
 				79081BBE1CC5C3B500486F97 /* libGossip.a in Frameworks */,
 				7934AA811CC4BC2B0016181C /* AVFoundation.framework in Frameworks */,
 				7934AA7F1CC4BC260016181C /* AudioToolbox.framework in Frameworks */,
@@ -374,6 +383,10 @@
 				7934AA561CC4BB3D0016181C /* NumberButton.m */,
 				7934AA571CC4BB3D0016181C /* PhonePadView.h */,
 				7934AA581CC4BB3D0016181C /* PhonePadView.m */,
+				79913C721CC9EFF9002D6B30 /* CallTableViewCell.h */,
+				79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */,
+				79913C771CCA11F1002D6B30 /* ExpandedCallTableViewCell.h */,
+				79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */,
 			);
 			name = DialViewController;
 			sourceTree = "<group>";
@@ -381,10 +394,10 @@
 		7934AA741CC4BBBF0016181C /* ContactsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7934AA471CC4BB3D0016181C /* ContactDetailViewController.h */,
-				7934AA481CC4BB3D0016181C /* ContactDetailViewController.m */,
 				7934AA491CC4BB3D0016181C /* ContactsViewController.h */,
 				7934AA4A1CC4BB3D0016181C /* ContactsViewController.m */,
+				7934AA471CC4BB3D0016181C /* ContactDetailViewController.h */,
+				7934AA481CC4BB3D0016181C /* ContactDetailViewController.m */,
 			);
 			name = ContactsViewController;
 			sourceTree = "<group>";
@@ -403,6 +416,7 @@
 		7934AA8C1CC4BC510016181C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */,
 				7934AA8A1CC4BC440016181C /* UIKit.framework */,
 				7934AA881CC4BC3F0016181C /* Foundation.framework */,
 				7934AA861CC4BC3A0016181C /* CoreGraphics.framework */,
@@ -430,8 +444,8 @@
 		794946CF1CC870C0008EA743 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				794946CB1CC8705B008EA743 /* PhoneRecordModel.h */,
-				794946CC1CC8705B008EA743 /* PhoneRecordModel.m */,
+				794946CB1CC8705B008EA743 /* CallRecordModel.h */,
+				794946CC1CC8705B008EA743 /* CallRecordModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -593,7 +607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				794946CD1CC8705B008EA743 /* PhoneRecordModel.m in Sources */,
+				794946CD1CC8705B008EA743 /* CallRecordModel.m in Sources */,
 				7934A9C01CC4B2760016181C /* main.m in Sources */,
 				7934A9C31CC4B2760016181C /* AppDelegate.m in Sources */,
 				7934AA5F1CC4BB3D0016181C /* CustomTableViewCell.m in Sources */,
@@ -601,11 +615,13 @@
 				7934AA5D1CC4BB3D0016181C /* ContactDetailViewController.m in Sources */,
 				794946D21CC872CC008EA743 /* DBUtil.m in Sources */,
 				7934AA5C1CC4BB3D0016181C /* CallViewController.m in Sources */,
+				79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */,
 				7934AA601CC4BB3D0016181C /* DialViewController.m in Sources */,
 				7934AA611CC4BB3D0016181C /* LoginViewController.m in Sources */,
 				7934AA621CC4BB3D0016181C /* MainTabBarViewController.m in Sources */,
 				7934AA631CC4BB3D0016181C /* MeViewController.m in Sources */,
 				7934AA641CC4BB3D0016181C /* NumberButton.m in Sources */,
+				79913C741CC9EFF9002D6B30 /* CallTableViewCell.m in Sources */,
 				7934AA651CC4BB3D0016181C /* PhonePadView.m in Sources */,
 				7934AA661CC4BB3D0016181C /* SignupViewController.m in Sources */,
 			);

@@ -10,13 +10,16 @@
 #import "Constants.h"
 #import "PhonePadView.h"
 #import "NumberButton.h"
+#import "CallRecordModel.h"
+#import "CallTableViewCell.h"
+#import "ExpandedCallTableViewCell.h"
 
 @protocol DialDelegate <NSObject>
 @optional
 - (void)makeDial:(NSString*) dialNumber;
 @end
 
-@interface DialViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface DialViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) id<DialDelegate> delegate;
 
@@ -25,7 +28,9 @@
 @property (nonatomic, assign) float w;
 @property (nonatomic, assign) float h;
 
-@property (weak, nonatomic) UIView *noRecordView;
+@property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) UIView *noRecordView;
+@property (strong, nonatomic) UITableView *recordTableView;
 @property (strong, nonatomic) PhonePadView *phonePadView;
 
 @end

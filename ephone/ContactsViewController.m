@@ -34,20 +34,16 @@
 }
 
 - (void)initViews {
-    CGSize viewSize = self.view.frame.size;
-    CGPoint viewOrigin = self.view.frame.origin;
-    
     // set search bar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(viewOrigin.x+16, viewOrigin.y+32,
-                                                                   viewSize.width-32, 32)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+32,
+                                                                   SCREEN_WIDTH-32, 32)];
     self.searchBar.delegate = self;
     self.searchBar.showsScopeBar = NO;
     [self.searchBar sizeToFit];
     [self.view addSubview:self.searchBar];
     
     // set table view
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(viewOrigin.x+16, viewOrigin.y+self.searchBar.frame.size.height+32,
-                                                                   viewSize.width-32, viewSize.height-64)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH-32, SCREEN_HEIGHT-64)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];

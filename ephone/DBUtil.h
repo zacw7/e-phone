@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
-#import "PhoneRecordModel.h"
+#import "CallRecordModel.h"
 #import "Constants.h"
 
 //归属地数据库的名称
@@ -28,20 +28,16 @@
 }
 + (DBUtil *) sharedManager;//获取单例对象
 
-//获取沙箱下数据库文件全路径
+#pragma mark 归属地数据库存储路径获取
 - (NSString *)applicationDocumentsDirectoryFile;
-//创建可编辑的数据库副本
+#pragma mark 创建数据库文件
 - (void) createEditableCopyOfDbIfNeeded;
-////获取沙箱下数据库文件全路径
-//- (NSString *)applicationDocumentsDirectoryFile;
-////创建可编辑的数据库副本
-//- (void) createEditableCopyOfDbIfNeeded;
 #pragma mark 创建通话记录联系人表
 - (void) createRecentContactsTable;
 #pragma mark 查询所有通话记录的方法
 - (NSMutableArray *) findAllRecentContactsRecordByLoginMobNum:(NSString *) myPhoneNum;
 #pragma mark 插入通话记录的方法
-- (BOOL) insertRecentContactsRecord:(PhoneRecordModel *) prm;
+- (BOOL) insertRecentContactsRecord:(CallRecordModel *) prm;
 #pragma mark 删除指定id通话记录的方法
 - (BOOL) deleteRecentContactRecordById:(int) dbId;
 #pragma mark 根据登陆手机号清空该用户通话记录表的方法
