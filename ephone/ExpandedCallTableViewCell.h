@@ -13,4 +13,8 @@
 
 @property (strong, nonatomic) UIView *expandView;
 
+@property (strong, nonatomic) UIButton *callBtn;
+@property (strong, nonatomic) UIButton *deleteBtn;
+@property (strong, nonatomic) UIButton *saveBtn;
+
 @end

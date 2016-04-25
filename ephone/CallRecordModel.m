@@ -9,5 +9,5 @@
 #import "CallRecordModel.h"
 
 @implementation CallRecordModel
-@synthesize dbId, name, phoneNum, address, call_time, duration, type, myPhoneNum, endTime, isPlatUpload, isItmsUpload, currentLocation;
+@synthesize dbId, name, account, domain, attribution, callTime, duration, callType, networkType, myAccount;
 @end

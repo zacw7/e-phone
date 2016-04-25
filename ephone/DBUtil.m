@@ -100,46 +100,35 @@ static DBUtil * util=nil;
                 //                [objDict setObject:[[NSString alloc ]initWithUTF8String:name] forKey:@"name"];
                 recordModel.name=[[NSString alloc ]initWithUTF8String:name];
                 
-                char  *phoneNum=(char *)sqlite3_column_text(statement, 2);
+                char  *account=(char *)sqlite3_column_text(statement, 2);
                 //                [objDict setObject:[[NSString alloc ]initWithUTF8String:phoneNum] forKey:@"phoneNum"];
-                recordModel.phoneNum=[[NSString alloc ]initWithUTF8String:phoneNum];
+                recordModel.account=[[NSString alloc ]initWithUTF8String:account];
                 
-                char  *address=(char *)sqlite3_column_text(statement, 3);
+                char  *attribution=(char *)sqlite3_column_text(statement, 3);
                 //                [objDict setObject:[[NSString alloc ]initWithUTF8String:location] forKey:@"location"];
                 
-                recordModel.address=[[NSString alloc ]initWithUTF8String:address];
+                recordModel.attribution=[[NSString alloc ]initWithUTF8String:attribution];
                 
-                char  *call_time=(char *)sqlite3_column_text(statement, 4);
+                //TODO - domain
+                
+                char  *callTime=(char *)sqlite3_column_text(statement, 4);
                 //                [objDict setObject:[[NSString alloc ]initWithUTF8String:call_time] forKey:@"call_time"];
-                recordModel.call_time=[[NSString alloc ]initWithUTF8String:call_time];
+                recordModel.callTime=[[NSString alloc ]initWithUTF8String:callTime];
+                
+                //TODO - duration
                 
                 //                int  type=sqlite3_column_int(statement, 5);
                 //                [objDict setObject:[NSNumber numberWithInt:type] forKey:@"type"];
-                char  *type=(char *)sqlite3_column_text(statement, 5);
-                recordModel.type=[[NSString alloc ]initWithUTF8String:type];
+                char  *callType=(char *)sqlite3_column_text(statement, 5);
+                recordModel.callType=[[NSString alloc ]initWithUTF8String:callType];
                 
-                char  *myPhoneNum=(char *)sqlite3_column_text(statement, 6);
+                
+                //TODO - networkType
+                
+                char  *myAccount=(char *)sqlite3_column_text(statement, 6);
                 //                [objDict setObject:[[NSString alloc ]initWithUTF8String:myPhoneNum] forKey:@"myPhoneNum"];
                 
-                recordModel.myPhoneNum=[[NSString alloc ]initWithUTF8String:myPhoneNum];
-                
-                char  *endTime=(char *)sqlite3_column_text(statement, 7);
-                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:endTime] forKey:@"endTime"];
-                recordModel.endTime=[[NSString alloc ]initWithUTF8String:endTime];
-                //                int  isPlatUpload=sqlite3_column_int(statement,8);
-                //                [objDict setObject:[NSNumber numberWithInt:isPlatUpload] forKey:@"isPlatUpload"];
-                char  *isPlatUpload=(char *)sqlite3_column_text(statement, 8);
-                recordModel.isPlatUpload=[[NSString alloc ]initWithUTF8String:isPlatUpload];
-                
-                //                int  isItmsUpload=sqlite3_column_int(statement,9);
-                //                [objDict setObject:[NSNumber numberWithInt:isItmsUpload] forKey:@"isItmsUpload"];
-                char  *isItmsUpload=(char *)sqlite3_column_text(statement, 9);
-                recordModel.isItmsUpload=[[NSString alloc ]initWithUTF8String:isItmsUpload];
-                
-                char  *currentLocation=(char *)sqlite3_column_text(statement, 10);
-                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:currentLocation] forKey:@"currentLocation"];
-                recordModel.currentLocation=[[NSString alloc ]initWithUTF8String:currentLocation];
-                
+                recordModel.myAccount=[[NSString alloc ]initWithUTF8String:myAccount];
                 
                 [resultList addObject:recordModel];
             }
@@ -163,18 +152,12 @@ static DBUtil * util=nil;
         int code1= sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL);
         if (code1==SQLITE_OK) {
             sqlite3_bind_text(statement, 1, [recordModel.name UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 2, [recordModel.phoneNum UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 3, [recordModel.address UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 4, [recordModel.call_time UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 2, [recordModel.account UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 3, [recordModel.attribution UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 4, [recordModel.callTime UTF8String], -1, NULL);
             //            sqlite3_bind_int(statement, 5, [(NSNumber *)[recordDict objectForKey:@"type"] intValue]);
             //sqlite3_bind_text(statement, 5, [recordModel.type UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 6, [recordModel.myPhoneNum UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 7, [recordModel.endTime UTF8String], -1, NULL);
-            //            sqlite3_bind_int(statement, 8, [(NSNumber *)[recordDict objectForKey:@"isPlatUpload"] intValue]);
-            sqlite3_bind_text(statement, 8, [recordModel.isPlatUpload UTF8String], -1, NULL);
-            //            sqlite3_bind_int(statement, 9, [(NSNumber *)[recordDict objectForKey:@"isItmsUpload"] intValue]);
-            sqlite3_bind_text(statement, 9, [recordModel.isItmsUpload UTF8String], -1, NULL);
-            sqlite3_bind_text(statement, 10, [recordModel.currentLocation UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 6, [recordModel.myAccount UTF8String], -1, NULL);
             
             if (sqlite3_step(statement)!=SQLITE_DONE)
             {
@@ -182,7 +165,7 @@ static DBUtil * util=nil;
                 return NO;
             }
             //删除超过60条的记录
-            [self deleteMoreThan60RecentContactRecordWithLoginMobNum:recordModel.myPhoneNum];
+            [self deleteMoreThan60RecentContactRecordWithLoginMobNum:recordModel.myAccount];
         }
         sqlite3_finalize(statement);
     }

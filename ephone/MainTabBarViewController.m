@@ -57,11 +57,8 @@
 }
 
 #pragma mark - DialDelegate
-- (void)makeDial:(NSString*) dialNumber {
-    if([dialNumber isEqualToString:@""]) return;
-    callingNumber = dialNumber;
-    NSString *address = [[callingNumber stringByAppendingString:@"@"] stringByAppendingString:self.serverAddress];
-    call = [GSCall outgoingCallToUri:address fromAccount:_account];
+- (void)makeSipCall:(NSString*) sipUri {
+    call = [GSCall outgoingCallToUri:sipUri fromAccount:_account];
     [self makeCall];
 }
 
@@ -144,7 +141,6 @@
 
 - (void)presentCallViewController {
     CallViewController *callVC = [CallViewController new];
-    //callVC.callingNumber = callingNumber;
     callVC.call = call;
     [call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
     [self presentViewController:callVC animated:YES completion:^{

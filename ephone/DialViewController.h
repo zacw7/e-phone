@@ -16,7 +16,7 @@
 
 @protocol DialDelegate <NSObject>
 @optional
-- (void)makeDial:(NSString*) dialNumber;
+- (void)makeSipCall:(NSString*) sipUrl;
 @end
 
 @interface DialViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>

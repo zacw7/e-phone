@@ -8,25 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum
-{
+typedef enum {
     OUTCOMING = 0,
     INCOMING,
     FAILED,
     MISSED,
 } CallType;
 
+typedef enum {
+    SIP = 0,
+    PSTN,
+} NetworkType;
+
 @interface CallRecordModel : NSObject
+
 @property (nonatomic, assign) int dbId;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *phoneNum;
-@property (nonatomic, retain) NSString *address;
-@property (nonatomic, retain) NSString *call_time;
+@property (nonatomic, retain) NSString *account;
+@property (nonatomic, retain) NSString *domain;
+@property (nonatomic, retain) NSString *attribution;
+@property (nonatomic, retain) NSString *callTime;
 @property (nonatomic, retain) NSString *duration;
-@property (nonatomic) CallType type;
-@property (nonatomic, retain) NSString *myPhoneNum;
-@property (nonatomic, retain) NSString *endTime;
-@property (nonatomic, retain) NSString *isPlatUpload;
-@property (nonatomic, retain) NSString *isItmsUpload;
-@property (nonatomic, retain) NSString *currentLocation;
+@property (nonatomic) CallType callType;
+@property (nonatomic) NetworkType networkType;
+
+@property (nonatomic, retain) NSString *myAccount;
+
 @end

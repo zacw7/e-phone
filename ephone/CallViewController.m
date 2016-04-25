@@ -143,6 +143,7 @@
     [self setEnabledOfAllButtons:NO];
     [hangupBtn.layer setBackgroundColor:[UIColor redColor].CGColor];
     [hangupBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [hangupBtn setEnabled:YES];
 }
 
 #pragma mark - Button event handler

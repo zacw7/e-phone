@@ -32,6 +32,9 @@
     //GSCall *call;
     
     UILabel *callStatusLabel;
+    
+    // Current Call Record
+    CallRecordModel *expandedCallRecord;
 }
 
 @synthesize delegate = _delegate;
@@ -47,48 +50,41 @@
 - (void)initData {
     selectedIndex = -1;
     dataArr = [NSMutableArray new];
+    expandedCallRecord = nil;
     
     //模拟通话记录数据
     CallRecordModel *prm1=[[CallRecordModel alloc]init];
     prm1.name=@"马云";
-    prm1.phoneNum=@"13568818032";
-    prm1.address=@"四川成都移动";
-    prm1.call_time=@"2015-10-26 19:42:32";
+    prm1.account=@"13568818032";
+    prm1.attribution=@"四川成都移动";
+    prm1.callTime=@"2015-10-26 19:42:32";
     prm1.duration=@"00:12:11";
-    prm1.type=INCOMING;
-    prm1.myPhoneNum=@"17717644206";
-    prm1.endTime=@"2015-10-26 19:45:32";
-    prm1.isPlatUpload=@"0";
-    prm1.isItmsUpload=@"0";
-    prm1.currentLocation=@"成都";
+    prm1.callType=INCOMING;
+    prm1.networkType=PSTN;
+
     [dataArr addObject:prm1];
     
     CallRecordModel *prm2=[[CallRecordModel alloc]init];
     prm2.name=@"马化腾";
-    prm2.phoneNum=@"13568818099";
-    prm2.address=@"四川成都移动";
-    prm2.call_time=@"2015-10-16 12:42:32";
+    prm2.account=@"13568818099";
+    prm2.attribution=@"四川成都移动";
+    prm2.callTime=@"2015-10-16 12:42:32";
     prm2.duration=@"--:--:--";
-    prm2.type=FAILED;
-    prm2.myPhoneNum=@"17717644206";
-    prm2.endTime=@"2015-10-16 14:45:32";
-    prm2.isPlatUpload=@"0";
-    prm2.isItmsUpload=@"0";
-    prm2.currentLocation=@"成都";
+    prm2.callType=FAILED;
+    prm2.networkType=PSTN;
+
     [dataArr addObject:prm2];
     
     CallRecordModel *prm3=[[CallRecordModel alloc]init];
     prm3.name=@"";
-    prm3.phoneNum=@"13568818095";
-    prm3.address=@"sip:121.42.43.237";
-    prm3.call_time=@"2015-10-26 09:42:32";
+    prm3.account=@"103";
+    prm3.attribution=nil;
+    prm3.domain=@"121.42.43.237";
+    prm3.callTime=@"2015-10-26 09:42:32";
     prm3.duration=@"00:01:22";
-    prm3.type=OUTCOMING;
-    prm3.myPhoneNum=@"17717644206";
-    prm3.endTime=@"2015-10-26 10:02:10";
-    prm3.isPlatUpload=@"0";
-    prm3.isItmsUpload=@"0";
-    prm3.currentLocation=@"成都";
+    prm3.callType=OUTCOMING;
+    prm3.networkType=SIP;
+
     [dataArr addObject:prm3];
     
     //dataArr=[util findAllRecentContactsRecordByLoginMobNum:@"17717644206"];
@@ -175,94 +171,52 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CallRecordModel *crm=dataArr[indexPath.row];
     if (selectedIndex==indexPath.row) {//展开的Cell
-        CallRecordModel *crm=dataArr[indexPath.row];
-        ExpandedCallTableViewCell *expCallCell = [[ExpandedCallTableViewCell alloc] initWithCallRecordModel:crm];
+        expandedCallRecord=dataArr[indexPath.row];
+        ExpandedCallTableViewCell *expCallCell = [[ExpandedCallTableViewCell alloc] initWithCallRecordModel:expandedCallRecord];
+        [expCallCell.callBtn addTarget:self action:@selector(recordCallBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [expCallCell.deleteBtn addTarget:self action:@selector(recordDeleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [expCallCell.saveBtn addTarget:self action:@selector(recordSaveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         return expCallCell;
-//        CallRecordModel *crm=dataArr[indexPath.row];
-//        ExpandCallCell *expandCell=[ExpandCallCell Cell];
-//        UILabel *nameLabel=expandCell.nameLabel;
-//        UILabel *timeLabel=expandCell.timeLabel;
-//        //        UIButton *expandBtn=expandCell.expandBtn;
-//        UILabel *mobNumLabel=expandCell.phoneNumLabel;
-//        UILabel *locationLabel=expandCell.locationLabel;
-//        UIButton *callBtn=expandCell.callBtn;
-//        UIButton *msgBtn=expandCell.msgBtn;
-//        UIButton *delBtn=expandCell.delBtn;
-//        UIButton *detailBtn=expandCell.detailBtn;
-//        UIImageView *callStatusIv=expandCell.statusIv;
-//        
-//        callBtn.titleLabel.tag=indexPath.row;
-//        [callBtn addTarget:self action:@selector(recordCallBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        msgBtn.titleLabel.tag=indexPath.row;
-//        [msgBtn addTarget:self action:@selector(recordMsgBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        delBtn.titleLabel.tag=indexPath.row;
-//        [delBtn addTarget:self action:@selector(recordDelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        detailBtn.titleLabel.tag=indexPath.row;
-//        [detailBtn addTarget:self action:@selector(recordDetailBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        nameLabel.text=prm.name;
-//        timeLabel.text=prm.call_time;
-//        mobNumLabel.text=prm.phoneNum;
-//        locationLabel.text=prm.location;
-//        
-//        if ([prm.type isEqualToString:@"1"]) {//呼入
-//            [callStatusIv setImage:[UIImage imageNamed:@"icon_call_in"]];
-//        }else if([prm.type isEqualToString:@"2"]){//呼出
-//            [callStatusIv setImage:[UIImage imageNamed:@"icon_call_out"]];
-//        }else if([prm.type isEqualToString:@"3"]){//未接
-//            [callStatusIv setImage:[UIImage imageNamed:@"icon_call_off"]];
-//        }
-//        return expandCell;
     }else{//没有展开的Cell
+        CallRecordModel *crm =dataArr[indexPath.row];
         CallTableViewCell *callCell = [[CallTableViewCell alloc] initWithCallRecordModel:crm];
         return callCell;
     }
     return [UITableViewCell new];
 }
-//#pragma mark 通话记录展开按钮点击
-//- (void) expandBtnClicked:(UIButton *) btn{
-//    if (selectedIndex==btn.titleLabel.tag) {//点击自身则收起来
-//        selectedIndex=-1;
-//    }else{
-//        selectedIndex=btn.titleLabel.tag;
-//    }
-//    [self.tableView reloadData];
-//}
 
-//- (void)setExtraCellLineHidden: (UITableView *)tableView {
-//    UIView *view = [UIView new];
-//    view.backgroundColor = [UIColor clearColor];
-//    [tableView setTableFooterView:view];
-//    [view release];
-//}
 #pragma mark 通话记录拨号按钮点击
-- (void) recordCallBtnClicked:(UIButton *) btn{
+- (void)recordCallBtnClicked {
     //    long index=btn.titleLabel.tag;
-    
-    
+    if(expandedCallRecord.networkType == SIP){}
+    NSString *sipUri;
+    if(_delegate) {
+        switch (expandedCallRecord.networkType) {
+            case SIP:
+                sipUri = [[expandedCallRecord.account stringByAppendingString:@"@"] stringByAppendingString:expandedCallRecord.domain];
+                [_delegate makeSipCall:sipUri];
+                break;
+            case PSTN:
+                NSLog(@"Unsupported network type currently");
+                break;
+            default:
+                NSLog(@"Unknown network type");
+                break;
+        }
+    }
 }
-#pragma mark 通话记录消息按钮点击
-- (void) recordMsgBtnClicked:(UIButton *) btn{
-    //    long index=btn.titleLabel.tag;
-    
-    
-}
+
 #pragma mark 通话记录删除按钮点击
-- (void) recordDelBtnClicked:(UIButton *) btn{
+- (void)recordDeleteBtnClicked {
     //    long index=btn.titleLabel.tag;
-    
+    NSLog(@"Record Delete");
     
 }
-#pragma mark 通话记录详情按钮点击
-- (void) recordDetailBtnClicked:(UIButton *) btn{
+#pragma mark 保存联系人按钮点击
+- (void)recordSaveBtnClicked {
     //    long index=btn.titleLabel.tag;
-    
-    
+    NSLog(@"Record Save");
 }
 
 - (void)initKeyboard {
@@ -401,15 +355,11 @@
     return nil;
 }
 
-- (void)keyboardWillShow: (NSNotification *)notif {
-    NSLog(@"hide");
-    //[inputTF resignFirstResponder];
-}
-
 #pragma mark - Dial Button is clicked
 - (void)dialBtnClicked {
-    if (![inputTF.text isEqualToString:@""] && _delegate) {
-        [_delegate makeDial:inputTF.text];
+    if(![inputTF.text isEqualToString:@""] && _delegate) {
+        NSString *sipUri = [[inputTF.text stringByAppendingString:@"@"] stringByAppendingString:SERVER_ADDRESS];
+        [_delegate makeSipCall:sipUri];
     }
 }
 

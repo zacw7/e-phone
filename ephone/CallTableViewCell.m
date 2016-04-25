@@ -33,7 +33,7 @@
     const float ORIGIN_Y = self.frame.origin.y + CELL_WIDTH*0.03;
     
     NSString *callTypeImagePath;
-    switch (_callRecord.type) {
+    switch (_callRecord.callType) {
         case OUTCOMING: callTypeImagePath = @"icon_call_out.png"; break;
         case INCOMING: callTypeImagePath = @"icon_call_in.png"; break;
         case FAILED: callTypeImagePath = @"icon_call_off.png"; break;
@@ -52,20 +52,20 @@
     [self addSubview:nameLabel];
     
     phoneNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.1, ORIGIN_Y + CELL_HEIGHT*0.5, CELL_WIDTH*0.35, CELL_HEIGHT/2)];
-    phoneNumberLabel.text = _callRecord.phoneNum;
+    phoneNumberLabel.text = _callRecord.account;
     phoneNumberLabel.textColor = [UIColor grayColor];
     phoneNumberLabel.font = [UIFont fontWithName:@"Arial" size:14];
     [self addSubview:phoneNumberLabel];
     
     callTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
-    callTimeLabel.text = _callRecord.call_time;
+    callTimeLabel.text = _callRecord.callTime;
     callTimeLabel.textColor = [UIColor darkGrayColor];
     callTimeLabel.font = [UIFont fontWithName:@"Arial" size:14];
     callTimeLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:callTimeLabel];
     
     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y + CELL_HEIGHT*0.5, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
-    addressLabel.text = _callRecord.address;
+    addressLabel.text = _callRecord.domain;
     addressLabel.textColor = [UIColor darkGrayColor];
     addressLabel.font = [UIFont fontWithName:@"Arial" size:14];
     addressLabel.textAlignment = NSTextAlignmentRight;
