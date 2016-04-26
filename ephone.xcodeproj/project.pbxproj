@@ -220,6 +220,7 @@
 		794946D01CC872CC008EA743 /* DBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBUtil.h; sourceTree = "<group>"; };
 		794946D11CC872CC008EA743 /* DBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBUtil.m; sourceTree = "<group>"; };
 		794946D41CC874A4008EA743 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		79804A6C1CCE192E00AC05D7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		79913C721CC9EFF9002D6B30 /* CallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableViewCell.h; sourceTree = "<group>"; };
 		79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableViewCell.m; sourceTree = "<group>"; };
@@ -416,6 +417,7 @@
 		7934AA8C1CC4BC510016181C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79804A6C1CCE192E00AC05D7 /* libsqlite3.0.tbd */,
 				79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */,
 				7934AA8A1CC4BC440016181C /* UIKit.framework */,
 				7934AA881CC4BC3F0016181C /* Foundation.framework */,

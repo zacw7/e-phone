@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
+#import "DBUtil.h"
+#import "CallRecordModel.h"
 
 #import "Gossip.h"
 
@@ -20,7 +22,7 @@ typedef enum
 
 @interface CallViewController : UIViewController
 
-//@property (strong, nonatomic) NSString *callingNumber;
 @property (strong, nonatomic) GSCall *call;
+@property (strong, nonatomic) CallRecordModel *crm;
 
 @end

@@ -13,6 +13,7 @@
 #import "CallRecordModel.h"
 #import "CallTableViewCell.h"
 #import "ExpandedCallTableViewCell.h"
+#import "DBUtil.h"
 
 @protocol DialDelegate <NSObject>
 @optional
@@ -27,6 +28,8 @@
 @property (nonatomic, assign) float btnHeight;
 @property (nonatomic, assign) float w;
 @property (nonatomic, assign) float h;
+
+@property (nonatomic, assign) const NSString *myAccount;
 
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIView *noRecordView;

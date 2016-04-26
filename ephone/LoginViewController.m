@@ -131,7 +131,7 @@
     
     _account = agent.account;
     [_account addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"accountStatusContext"];
-    _account.delegate = self;
+    //_account.delegate = self;
     [_account connect];
     loginEvent = YES;
 }
@@ -251,9 +251,10 @@
 
 - (void)presentMainViewController {
     if(loginEvent == NO) return;
-    MainTabBarViewController *mainTabBarViewController = [MainTabBarViewController new];
+    MainTabBarViewController *mainTabBarViewController = [MainTabBarViewController alloc];
     mainTabBarViewController.username = self.usernameTF.text;
     mainTabBarViewController.serverAddress = SERVER_ADDRESS;
+    mainTabBarViewController = [mainTabBarViewController init];
     [self.loginIndicatorView stopAnimating];
     [self presentViewController:mainTabBarViewController animated:YES completion:^{
         [self.loginBtn setEnabled:YES];

@@ -8,11 +8,17 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "DBUtil.h"
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
+//        NSLog(@"第一次启动");
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+//    }else{
+//        NSLog(@"不是第一次启动");
+//    }
     return YES;
 }
 

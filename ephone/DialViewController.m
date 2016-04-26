@@ -28,13 +28,10 @@
     BOOL isKeyBoardShow;
     //是否开启热点视图
     BOOL isHotPointOn;
-    // Call
-    //GSCall *call;
-    
-    UILabel *callStatusLabel;
-    
     // Current Call Record
     CallRecordModel *expandedCallRecord;
+    // DBUtil
+    DBUtil *dbUtil;
 }
 
 @synthesize delegate = _delegate;
@@ -48,47 +45,51 @@
 }
 
 - (void)initData {
+    dbUtil = [DBUtil sharedManager];
     selectedIndex = -1;
     dataArr = [NSMutableArray new];
     expandedCallRecord = nil;
     
-    //模拟通话记录数据
-    CallRecordModel *prm1=[[CallRecordModel alloc]init];
-    prm1.name=@"马云";
-    prm1.account=@"13568818032";
-    prm1.attribution=@"四川成都移动";
-    prm1.callTime=@"2015-10-26 19:42:32";
-    prm1.duration=@"00:12:11";
-    prm1.callType=INCOMING;
-    prm1.networkType=PSTN;
+//    //模拟通话记录数据
+//    CallRecordModel *prm1=[[CallRecordModel alloc]init];
+//    prm1.name=@"马云";
+//    prm1.account=@"13568818032";
+//    prm1.attribution=@"四川成都移动";
+//    prm1.callTime=@"2015-10-26 19:42:32";
+//    prm1.duration=@"00:12:11";
+//    prm1.callType=INCOMING;
+//    prm1.networkType=PSTN;
+//    prm1.myAccount = @"101";
+//
+//    [dataArr addObject:prm1];
+//    
+//    CallRecordModel *prm2=[[CallRecordModel alloc]init];
+//    prm2.name=@"马化腾";
+//    prm2.account=@"13568818099";
+//    prm2.attribution=@"四川成都移动";
+//    prm2.callTime=@"2015-10-16 12:42:32";
+//    prm2.duration=@"--:--:--";
+//    prm2.callType=FAILED;
+//    prm2.networkType=PSTN;
+//    prm2.myAccount = @"102";
+//
+//    [dataArr addObject:prm2];
+//    
+//    CallRecordModel *prm3=[[CallRecordModel alloc]init];
+//    prm3.name=@"";
+//    prm3.account=@"103";
+//    prm3.attribution=nil;
+//    prm3.domain=@"121.42.43.237";
+//    prm3.callTime=@"2015-10-26 09:42:32";
+//    prm3.duration=@"00:01:22";
+//    prm3.callType=OUTCOMING;
+//    prm3.networkType=SIP;
+//    prm3.myAccount = @"101";
+//
+//    [dataArr addObject:prm3];
 
-    [dataArr addObject:prm1];
-    
-    CallRecordModel *prm2=[[CallRecordModel alloc]init];
-    prm2.name=@"马化腾";
-    prm2.account=@"13568818099";
-    prm2.attribution=@"四川成都移动";
-    prm2.callTime=@"2015-10-16 12:42:32";
-    prm2.duration=@"--:--:--";
-    prm2.callType=FAILED;
-    prm2.networkType=PSTN;
-
-    [dataArr addObject:prm2];
-    
-    CallRecordModel *prm3=[[CallRecordModel alloc]init];
-    prm3.name=@"";
-    prm3.account=@"103";
-    prm3.attribution=nil;
-    prm3.domain=@"121.42.43.237";
-    prm3.callTime=@"2015-10-26 09:42:32";
-    prm3.duration=@"00:01:22";
-    prm3.callType=OUTCOMING;
-    prm3.networkType=SIP;
-
-    [dataArr addObject:prm3];
-    
-    //dataArr=[util findAllRecentContactsRecordByLoginMobNum:@"17717644206"];
-    
+    dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    NSLog(@"dataArr: %@", dataArr);
 }
 
 - (void)initViews{
@@ -211,7 +212,7 @@
 - (void)recordDeleteBtnClicked {
     //    long index=btn.titleLabel.tag;
     NSLog(@"Record Delete");
-    
+    [dbUtil deleteRecentContactRecordById:expandedCallRecord.dbId];
 }
 #pragma mark 保存联系人按钮点击
 - (void)recordSaveBtnClicked {

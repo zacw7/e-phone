@@ -25,16 +25,23 @@
     UIButton *hangupBtn;
     
     float volume, micVol;
-    BOOL isMute, isHold, isVideo, isSpeaker;
+    BOOL isConnected, isMute, isHold, isVideo, isSpeaker;
     
     NSString *remoteUriAddress;
     NSString *remoteType;
     NSString *remoteAccount;
-    NSString *remoteAddress;
+    NSString *remoteDomain;
+    
+    NSString *localUriAddress;
+    NSString *localType;
+    NSString *localAccount;
+    NSString *localDomain;
+    
+    DBUtil *dbUtil;
 }
 
-//@synthesize callingNumber = _callingNumber;
 @synthesize call = _call;
+@synthesize crm = _crm;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,22 +50,47 @@
 }
 
 - (void)initData {
+    dbUtil = [DBUtil sharedManager];
+    _crm = [CallRecordModel new];
+    
     seconds = -1;
     hours = minutes = 0;
     timeHelper = 1;
-    isMute = isHold = isVideo = isSpeaker = NO;
+    isConnected = isMute = isHold = isVideo = isSpeaker = NO;
     volume = _call.volume;
     micVol = _call.micVolume;
     updateTimer = nil;
     disconnectReason = INVALID_NUMBER;
     remoteUriAddress = [_call getRemoteUri];
-    NSArray *array = [remoteUriAddress componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<:@>"]];
+    localUriAddress = [_call getLocalUri];
+    
+    NSArray *remoteArray = [remoteUriAddress componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<:@>"]];
     int shift = 0;
-    if([array[0] isEqualToString:@""]) shift = 1;
-    remoteType = array[0+shift];
-    remoteAccount = array[1+shift];
-    remoteAddress = array[2+shift];
+    if([remoteArray[0] isEqualToString:@""]) shift = 1;
+    remoteType = remoteArray[0+shift];
+    remoteAccount = remoteArray[1+shift];
+    remoteDomain = remoteArray[2+shift];
+    
+    NSArray *localArray = [localUriAddress componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<:@>"]];
+    shift = 0;
+    if([localArray[0] isEqualToString:@""]) shift = 1;
+    localType = localArray[0+shift];
+    localAccount = localArray[1+shift];
+    localDomain = localArray[2+shift];
+    
     [_call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
+    
+    _crm.name = @"";
+    _crm.account = remoteAccount;
+    _crm.domain = remoteDomain;
+    _crm.attribution = @"";
+    
+    NSDateFormatter *df = [NSDateFormatter new];
+    [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    _crm.callTime = [df stringFromDate:[NSDate date]];
+    
+    _crm.networkType = SIP;
+    _crm.myAccount = localAccount;
 }
 
 - (void)initViews {
@@ -74,8 +106,8 @@
                                                            SCREEN_WIDTH/2,
                                                            SCREEN_HEIGHT*0.1 - 1)];
     //[callingNumLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    if([remoteAddress isEqualToString:SERVER_ADDRESS]) callingAddressLabel.text = remoteAccount;
-    else callingAddressLabel.text = [[remoteAccount stringByAppendingString:@"@"] stringByAppendingString:remoteAddress];
+    if([remoteDomain isEqualToString:SERVER_ADDRESS]) callingAddressLabel.text = remoteAccount;
+    else callingAddressLabel.text = [[remoteAccount stringByAppendingString:@"@"] stringByAppendingString:remoteDomain];
     callingAddressLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:callingAddressLabel];
     
@@ -272,6 +304,7 @@
         case GSCallStatusConnected: {
             NSLog(@"GSCallStatusConnected");
             [self setEnabledOfAllButtons:YES];
+            isConnected = YES;
             disconnectReason = HANGUP;
             if(!updateTimer)
                 updateTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerDone) userInfo:nil repeats:YES];
@@ -303,13 +336,22 @@
                     break;
             }
             [self performSelector:@selector(dissMissSelf) withObject:nil afterDelay:2.5];
+            if(isConnected) {
+                _crm.duration = [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds];
+            } else {
+                _crm.duration = @"--:--:--";
+                if(_crm.callType == INCOMING) _crm.callType = MISSED;
+                else if(_crm.callType == OUTCOMING) _crm.callType = FAILED;
+            }
         } break;
             
     }
 }
 
 - (void)dissMissSelf{
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    NSLog(@"crm %@", _crm);
+    if(_crm.myAccount) [dbUtil insertRecentContactsRecord:_crm];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

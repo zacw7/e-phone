@@ -32,6 +32,7 @@
     _meVC  = [MeViewController new];
     
     _dialVC.delegate = self;
+    _dialVC.myAccount = self.username;
     
     _agent = [GSUserAgent sharedAgent];
     _account = _agent.account;
@@ -52,14 +53,13 @@
     
     self.logoutIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.logoutIndicatorView.center = self.view.center;
-    NSLog(@"Center: %f, %f", self.logoutIndicatorView.center.x, self.logoutIndicatorView.center.y);  ///////////
     [self.view addSubview: self.logoutIndicatorView];
 }
 
 #pragma mark - DialDelegate
 - (void)makeSipCall:(NSString*) sipUri {
     call = [GSCall outgoingCallToUri:sipUri fromAccount:_account];
-    [self makeCall];
+    [self makeCall:OUTCOMING];
 }
 
 #pragma mark - GSAccountDelegate
@@ -89,7 +89,7 @@
 }
 
 - (void)userDidPickupCall {
-    [self makeCall];
+    [self makeCall:INCOMING];
 }
 
 - (void)userDidDenyCall {
@@ -97,14 +97,21 @@
     call = nil;
 }
 
-- (void)makeCall {
+- (void)makeCall:(CallType) callType {
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.dialVC.phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(M_PI*3/4);
     } completion:^(BOOL finish){
         [call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
         [call begin];
         [self.dialVC.phonePadView.dialBtn setEnabled:NO];
-        [self presentCallViewController];
+        CallViewController *callVC = [CallViewController new];
+        callVC.call = call;
+        [call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
+        [self presentViewController:callVC animated:YES completion:^{
+            [self.dialVC.phonePadView.dialBtn setEnabled:YES];
+            self.dialVC.phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(0);
+            callVC.crm.callType = callType;
+        }];
         isReceivingCall = YES;
     }];
 }
@@ -122,31 +129,21 @@
 - (void)callStatusDidChange {
     switch (call.status) {
         case GSCallStatusReady: {
-            NSLog(@"GSCallStatusReady");
+            NSLog(@"Main: GSCallStatusReady");
         } break;
         case GSCallStatusConnecting: {
-            NSLog(@"GSCallStatusConnecting");
+            NSLog(@"Main: GSCallStatusConnecting");
         } break;
         case GSCallStatusCalling: {
-            NSLog(@"GSCallStatusCalling");
+            NSLog(@"Main: GSCallStatusCalling");
         } break;
         case GSCallStatusConnected: {
-            NSLog(@"GSCallStatusConnected");
+            NSLog(@"Main: GSCallStatusConnected");
         } break;
         case GSCallStatusDisconnected: {
-            NSLog(@"GSCallStatusDisconnected");
+            NSLog(@"Main: GSCallStatusDisconnected");
         } break;
     }
-}
-
-- (void)presentCallViewController {
-    CallViewController *callVC = [CallViewController new];
-    callVC.call = call;
-    [call removeObserver:self forKeyPath:@"status" context:@"callStatusContext"];
-    [self presentViewController:callVC animated:YES completion:^{
-        [self.dialVC.phonePadView.dialBtn setEnabled:YES];
-        self.dialVC.phonePadView.dialBtn.transform = CGAffineTransformMakeRotation(0);
-    }];
 }
 
 - (void)logout {
