@@ -18,8 +18,7 @@
 @synthesize deleteBtn = _deleteBtn;
 @synthesize saveBtn = _saveBtn;
 
-
-- (void) initViews{
+- (void)initViews {
     [super initViews];
     _callRecord = super.callRecord;
     const float CELL_WIDTH = self.frame.size.width;
@@ -91,7 +90,6 @@
     [_saveBtn addSubview:saveImageView];
     [_saveBtn addSubview:saveLabel];
     [_expandView addSubview:_saveBtn];
-
 }
 
 @end

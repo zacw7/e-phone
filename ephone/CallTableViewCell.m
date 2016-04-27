@@ -72,8 +72,7 @@
     [self addSubview:addressLabel];
 }
 
-- (UIImage*)imageCompressWithSimple:(UIImage*)image scale:(float)scale
-{
+- (UIImage*)imageCompressWithSimple:(UIImage*)image scale:(float)scale {
     CGSize size = image.size;
     CGFloat width = size.width;
     CGFloat height = size.height;

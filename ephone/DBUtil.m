@@ -33,8 +33,9 @@ static DBUtil * util=nil;
 - (void) createEditableCopyOfDbIfNeeded {
     if([self openDB] != SQLITE_OK) {
         NSLog(@"Open DB failed.");
-    } else
+    } else {
         [self createRecentContactsTable];
+    }
     sqlite3_close(db);
 }
 
@@ -159,6 +160,7 @@ static DBUtil * util=nil;
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
 }
@@ -184,6 +186,7 @@ static DBUtil * util=nil;
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
 }
@@ -208,6 +211,7 @@ static DBUtil * util=nil;
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
 }

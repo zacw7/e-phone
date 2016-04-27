@@ -45,6 +45,11 @@
 }
 
 - (void)initData {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(refreshData:)
+               name:@"refresh"
+             object:nil];
     dbUtil = [DBUtil sharedManager];
     selectedIndex = -1;
     dataArr = [NSMutableArray new];
@@ -185,6 +190,11 @@
         return callCell;
     }
     return [UITableViewCell new];
+}
+
+- (void)refreshData:(id)sender{
+    dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    [_recordTableView reloadData];
 }
 
 #pragma mark 通话记录拨号按钮点击
