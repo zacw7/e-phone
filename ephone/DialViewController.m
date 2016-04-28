@@ -11,14 +11,11 @@
 @implementation DialViewController {
     //通话记录数组
     NSMutableArray *dataArr;
-    //模糊搜索后的通话记录数组
-    NSMutableArray *searchArr;
     //是否在搜索模式
     BOOL isSearchMode;
     //被选中通话记录行的下标
     long selectedIndex;
     //拨号小键盘输入的内容
-    NSString *strNum;
     NSMutableString * _numlockStr;
     //拨号小键盘视图
     UIView *contentView;
@@ -55,58 +52,11 @@
     dataArr = [NSMutableArray new];
     expandedCallRecord = nil;
     
-//    //模拟通话记录数据
-//    CallRecordModel *prm1=[[CallRecordModel alloc]init];
-//    prm1.name=@"马云";
-//    prm1.account=@"13568818032";
-//    prm1.attribution=@"四川成都移动";
-//    prm1.callTime=@"2015-10-26 19:42:32";
-//    prm1.duration=@"00:12:11";
-//    prm1.callType=INCOMING;
-//    prm1.networkType=PSTN;
-//    prm1.myAccount = @"101";
-//
-//    [dataArr addObject:prm1];
-//    
-//    CallRecordModel *prm2=[[CallRecordModel alloc]init];
-//    prm2.name=@"马化腾";
-//    prm2.account=@"13568818099";
-//    prm2.attribution=@"四川成都移动";
-//    prm2.callTime=@"2015-10-16 12:42:32";
-//    prm2.duration=@"--:--:--";
-//    prm2.callType=FAILED;
-//    prm2.networkType=PSTN;
-//    prm2.myAccount = @"102";
-//
-//    [dataArr addObject:prm2];
-//    
-//    CallRecordModel *prm3=[[CallRecordModel alloc]init];
-//    prm3.name=@"";
-//    prm3.account=@"103";
-//    prm3.attribution=nil;
-//    prm3.domain=@"121.42.43.237";
-//    prm3.callTime=@"2015-10-26 09:42:32";
-//    prm3.duration=@"00:01:22";
-//    prm3.callType=OUTCOMING;
-//    prm3.networkType=SIP;
-//    prm3.myAccount = @"101";
-//
-//    [dataArr addObject:prm3];
-
     dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
-    NSLog(@"dataArr: %@", dataArr);
 }
 
 - (void)initViews{
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
-    // init SearchBar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+32,
-                                                                   SCREEN_WIDTH-32, 32)];
-    self.searchBar.delegate = self;
-    self.searchBar.showsScopeBar = NO;
-    [self.searchBar sizeToFit];
-    [self.view addSubview:self.searchBar];
     
     // init noRecordView
     self.noRecordView = [[UIView alloc] initWithFrame:self.view.frame];
@@ -123,8 +73,17 @@
     [self.noRecordView addSubview:noRecordLabel];
     [self.view addSubview:self.noRecordView];
     
+    // init SearchBar
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+32,
+                                                                   SCREEN_WIDTH-32, 32)];
+    self.searchBar.delegate = self;
+    self.searchBar.showsScopeBar = NO;
+    self.searchBar.keyboardType = UIKeyboardTypeDefault;
+    [self.searchBar sizeToFit];
+    [self.view addSubview:self.searchBar];
+    
     // init TableView
-    self.recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH-32, SCREEN_HEIGHT-64) style:UITableViewStylePlain];
+    self.recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH-32, SCREEN_HEIGHT-196) style:UITableViewStylePlain];
     self.recordTableView.delegate=self;
     self.recordTableView.dataSource=self;
     [self.recordTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
@@ -140,19 +99,44 @@
     [self.view addSubview:_phonePadView];
 }
 
+#pragma mark - Search Bar Delegate
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self filterContentForSearchText:self.searchBar.text];
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(nonnull NSString *)searchText {
+    [self filterContentForSearchText:self.searchBar.text];
+}
+
 #pragma mark UITableView delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (isSearchMode) { //模糊匹配状态
-        return [searchArr count];
-    }else{ //一般状态
-        if ([dataArr count]) { //没有通话记录
-            [self.view bringSubviewToFront: self.recordTableView];
-        }else{
-            [self.view bringSubviewToFront: self.noRecordView];
-        }
-        [self.view bringSubviewToFront: self.phonePadView];
-        return [dataArr count];
+    if ([dataArr count]) { //没有通话记录
+        [self.view bringSubviewToFront: self.recordTableView];
+    }else{
+        [self.view bringSubviewToFront: self.noRecordView];
     }
+    [self.view bringSubviewToFront: self.phonePadView];
+    return [dataArr count];
+}
+
+- (void)filterContentForSearchText:(NSString *)searchText {
+    if([searchText length] == 0) {
+        // search all
+        dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    } else {
+        // condition search
+        dataArr = [dbUtil findRecentContactsRecordsByLoginSearchBarContent:searchText withAccount:(NSString*)self.myAccount];
+    }
+    [_recordTableView reloadData];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -193,7 +177,11 @@
 }
 
 - (void)refreshData:(id)sender{
-    dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    if(self.searchBar.text.length) {
+        dataArr = [dbUtil findRecentContactsRecordsByLoginSearchBarContent:self.searchBar.text withAccount:(NSString*)self.myAccount];
+    } else {
+        dataArr = [dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    }
     [_recordTableView reloadData];
 }
 

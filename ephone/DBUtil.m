@@ -62,13 +62,77 @@ static DBUtil * util=nil;
 
 #pragma mark 查询所有通话记录的方法
 - (NSMutableArray *) findAllRecentContactsRecordByLoginMobNum:(NSString *) myAccount{
-    //                code=[self openDB];
     NSMutableArray *resultList=[[NSMutableArray alloc]init];
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
         NSLog(@"数据库打开失败",nil);
     }else{
         NSString *SQL=@"select * from t_phone_record where myAccount=? order by id DESC";
+        sqlite3_stmt *statement;
+        if (sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL)==SQLITE_OK) {
+            sqlite3_bind_text(statement, 1, [myAccount UTF8String], -1, NULL);
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                //                NSMutableDictionary *objDict=[[NSMutableDictionary alloc]init];//封装结果成字典对象
+                CallRecordModel *recordModel=[[CallRecordModel alloc]init];
+                recordModel.dbId=sqlite3_column_int(statement, 0);
+                
+                //                int  pid=sqlite3_column_int(statement, 0);
+                //                [objDict setObject:[NSNumber numberWithInt:pid] forKey:@"id"];
+                
+                char *name=(char *)sqlite3_column_text(statement, 1);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:name] forKey:@"name"];
+                if(name) recordModel.name=[[NSString alloc ] initWithUTF8String:name];
+                
+                char *account=(char *)sqlite3_column_text(statement, 2);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:phoneNum] forKey:@"phoneNum"];
+                if(account) recordModel.account=[[NSString alloc ] initWithUTF8String:account];
+                
+                char *domain=(char *)sqlite3_column_text(statement, 3);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:location] forKey:@"location"];
+                if(domain) recordModel.domain=[[NSString alloc ] initWithUTF8String:domain];
+                
+                char *attribution=(char *)sqlite3_column_text(statement, 4);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:location] forKey:@"location"];
+                if(attribution) recordModel.attribution=[[NSString alloc ] initWithUTF8String:attribution];
+                
+                char  *callTime=(char *)sqlite3_column_text(statement, 5);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:call_time] forKey:@"call_time"];
+                if(callTime) recordModel.callTime=[[NSString alloc ]initWithUTF8String:callTime];
+                
+                char  *duration=(char *)sqlite3_column_text(statement, 6);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:call_time] forKey:@"call_time"];
+                if(duration) recordModel.duration=[[NSString alloc ]initWithUTF8String:duration];
+                
+                //                int  type=sqlite3_column_int(statement, 5);
+                //                [objDict setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+                
+                CallType callType = atoi((char*)sqlite3_column_text(statement, 7));
+                recordModel.callType=callType;
+                
+                NetworkType networkType=atoi((char*)sqlite3_column_text(statement, 8));
+                recordModel.networkType = networkType;
+                
+                char  *myAccount=(char *)sqlite3_column_text(statement, 9);
+                //                [objDict setObject:[[NSString alloc ]initWithUTF8String:myAccount] forKey:@"myAccount"];
+                if(myAccount) recordModel.myAccount=[[NSString alloc ]initWithUTF8String:myAccount];
+                
+                [resultList addObject:recordModel];
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(db);
+    }
+    return resultList;
+}
+
+#pragma mark 模糊查找通话记录
+- (NSMutableArray *) findRecentContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount {
+    NSMutableArray *resultList=[[NSMutableArray alloc]init];
+    if ([self openDB]!=SQLITE_OK) {//数据库打开失败
+        sqlite3_close(db);
+        NSLog(@"数据库打开失败",nil);
+    }else{ //and (name like '%?%' or account like =?)
+        NSString *SQL=[NSString stringWithFormat:@"select * from t_phone_record where myAccount=? and (name like '%%%@%%' or account like '%%%@%%') order by id DESC", searchText, searchText];
         sqlite3_stmt *statement;
         if (sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL)==SQLITE_OK) {
             sqlite3_bind_text(statement, 1, [myAccount UTF8String], -1, NULL);

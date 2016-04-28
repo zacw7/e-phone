@@ -8,9 +8,7 @@
 
 #import "ContactsViewController.h"
 
-@implementation ContactsViewController {
-    //MainTabBarViewController *tabBarController;
-}
+@implementation ContactsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

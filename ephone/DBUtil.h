@@ -35,6 +35,8 @@
 - (BOOL) createRecentContactsTable;
 #pragma mark 查询所有通话记录的方法
 - (NSMutableArray *) findAllRecentContactsRecordByLoginMobNum:(NSString *) myAccount;
+#pragma mark 模糊查找通话记录
+- (NSMutableArray *) findRecentContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
 #pragma mark 插入通话记录的方法
 - (BOOL) insertRecentContactsRecord:(CallRecordModel *) prm;
 #pragma mark 删除指定id通话记录的方法
