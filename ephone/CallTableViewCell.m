@@ -17,6 +17,7 @@
 }
 
 @synthesize callRecord = _callRecord;
+@synthesize expandImageView = _expandImageView;
 
 -(id)initWithCallRecordModel:(CallRecordModel*) crm {
     if(self=[super init]) {
@@ -70,6 +71,13 @@
     addressLabel.font = [UIFont fontWithName:@"Arial" size:14];
     addressLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:addressLabel];
+    
+    UIImage *expandImage = [UIImage imageNamed:@"icon_down.png"];
+    expandImage = [self imageCompressWithSimple:expandImage scale:0.8];
+    
+    _expandImageView = [[UIImageView alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.87, ORIGIN_Y + CELL_HEIGHT*0.3, expandImage.size.width, expandImage.size.height)];
+    [_expandImageView setImage: expandImage];
+    [self addSubview:_expandImageView];
 }
 
 - (UIImage*)imageCompressWithSimple:(UIImage*)image scale:(float)scale {

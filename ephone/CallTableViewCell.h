@@ -12,8 +12,10 @@
 @interface CallTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) CallRecordModel *callRecord;
+@property (strong, nonatomic) UIImageView *expandImageView;
 
--(id)initWithCallRecordModel:(CallRecordModel*)crm;
--(void)initViews;
+- (id)initWithCallRecordModel:(CallRecordModel*)crm;
+- (void)initViews;
+- (UIImage*)imageCompressWithSimple:(UIImage*)image scale:(float)scale;
 
 @end

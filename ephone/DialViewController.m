@@ -15,7 +15,7 @@
     BOOL isSearchMode;
     //被选中通话记录行的下标
     long selectedIndex;
-    //拨号小键盘输入的内容
+    //拨号小键盘输入的内容dddhj
     NSMutableString * _numlockStr;
     //拨号小键盘视图
     UIView *contentView;
@@ -29,6 +29,9 @@
     CallRecordModel *expandedCallRecord;
     // DBUtil
     DBUtil *dbUtil;
+    
+    NSTimer *refreshTimer;
+    BOOL isReloading;
 }
 
 @synthesize delegate = _delegate;
@@ -51,6 +54,7 @@
     selectedIndex = -1;
     dataArr = [NSMutableArray new];
     expandedCallRecord = nil;
+    isReloading = NO;
     
     dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
 }
@@ -74,16 +78,15 @@
     [self.view addSubview:self.noRecordView];
     
     // init SearchBar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+32,
-                                                                   SCREEN_WIDTH-32, 32)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X, SCREEN_ORIGIN_Y+32,
+                                                                   SCREEN_WIDTH, 32)];
     self.searchBar.delegate = self;
     self.searchBar.showsScopeBar = NO;
-    self.searchBar.keyboardType = UIKeyboardTypeDefault;
     [self.searchBar sizeToFit];
     [self.view addSubview:self.searchBar];
     
     // init TableView
-    self.recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH-32, SCREEN_HEIGHT-196) style:UITableViewStylePlain];
+    self.recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH, SCREEN_HEIGHT-196) style:UITableViewStylePlain];
     self.recordTableView.delegate=self;
     self.recordTableView.dataSource=self;
     [self.recordTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
@@ -100,12 +103,12 @@
 }
 
 #pragma mark - Search Bar Delegate
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     return YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self filterContentForSearchText:self.searchBar.text];
+    [self filterContentForSearchText:searchBar.text];
     [self.searchBar resignFirstResponder];
 }
 
@@ -114,7 +117,28 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(nonnull NSString *)searchText {
-    [self filterContentForSearchText:self.searchBar.text];
+    [self filterContentForSearchText:searchBar.text];
+    if([searchText length] == 0) {
+        [searchBar performSelector: @selector(resignFirstResponder)
+                        withObject: nil
+                        afterDelay: 0.1];
+    }
+}
+
+- (void)filterContentForSearchText:(NSString *)searchText {
+    if([searchText length] == 0) {
+        // search all
+        dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
+    } else {
+        // condition search
+        dataArr = [dbUtil findRecentContactsRecordsByLoginSearchBarContent:searchText withAccount:(NSString*)self.myAccount];
+    }
+    if([dataArr count]) {
+        [_recordTableView setHidden:NO];
+        [_recordTableView reloadData];
+    } else {
+        [_recordTableView setHidden:YES];
+    }
 }
 
 #pragma mark UITableView delegate
@@ -126,17 +150,6 @@
     }
     [self.view bringSubviewToFront: self.phonePadView];
     return [dataArr count];
-}
-
-- (void)filterContentForSearchText:(NSString *)searchText {
-    if([searchText length] == 0) {
-        // search all
-        dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
-    } else {
-        // condition search
-        dataArr = [dbUtil findRecentContactsRecordsByLoginSearchBarContent:searchText withAccount:(NSString*)self.myAccount];
-    }
-    [_recordTableView reloadData];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -216,6 +229,7 @@
 - (void)recordSaveBtnClicked {
     //    long index=btn.titleLabel.tag;
     NSLog(@"Record Save");
+    
 }
 
 - (void)initKeyboard {

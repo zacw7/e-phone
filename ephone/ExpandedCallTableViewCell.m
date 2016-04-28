@@ -20,6 +20,10 @@
 
 - (void)initViews {
     [super initViews];
+    UIImage *expandImage = [UIImage imageNamed:@"icon_up.png"];
+    expandImage = [self imageCompressWithSimple:expandImage scale:0.8];
+    [super.expandImageView setImage: expandImage];
+    
     _callRecord = super.callRecord;
     const float CELL_WIDTH = self.frame.size.width;
     const float CELL_HEIGHT = self.frame.size.height;

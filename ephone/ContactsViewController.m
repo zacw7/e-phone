@@ -122,13 +122,11 @@
 
 
 #pragma mark - Search Bar Delegate
-
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     return YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self filterContentForSearchText:self.searchBar.text];
     [self.searchBar resignFirstResponder];
 }
 
