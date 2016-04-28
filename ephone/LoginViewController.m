@@ -95,9 +95,9 @@
 #pragma mark - Button Event Handler
 
 - (void)loginEventHandler {
-    loginEvent = YES;
-    [self presentMainViewController];
-    return;
+//    loginEvent = YES;
+//    [self presentMainViewController];
+//    return;
     
     NSString *username = self.usernameTF.text;
     NSString *password = self.passwordTF.text;

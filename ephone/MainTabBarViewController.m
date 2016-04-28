@@ -10,8 +10,13 @@
 
 @implementation MainTabBarViewController {
     GSCall *call;
+    
+    UIAlertView *incomingAlert;
+    
     NSString *callingNumber;
+    
     BOOL isReceivingCall;
+    BOOL isIncomingCallRinging;
 }
 
 @synthesize agent = _agent;
@@ -40,6 +45,12 @@
     
     callingNumber = @"";
     isReceivingCall = YES;
+    isIncomingCallRinging = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(incomingCallDisconnected)
+                                                 name:GSSIPCallStateDidChangeNotification
+                                               object:nil];
 }
 
 - (void)initViews {
@@ -66,26 +77,36 @@
 - (void)account:(GSAccount *)account didReceiveIncomingCall:(GSCall *)incomingCall {
     if(isReceivingCall) isReceivingCall = NO;
     else return;
+    isIncomingCallRinging = YES;
     NSLog(@"ReceiveIncomingCall");
     call = incomingCall;
-    UIAlertView *alert = [[UIAlertView alloc] init];
-    [alert setAlertViewStyle:UIAlertViewStyleDefault];
-    [alert setDelegate:self];
-    [alert setTitle:@"Incoming call."];
-    [alert addButtonWithTitle:@"Decline"];
-    [alert addButtonWithTitle:@"Answer"];
-    [alert setCancelButtonIndex:0];
-    [alert show];
+    incomingAlert = [[UIAlertView alloc] init];
+    [incomingAlert setAlertViewStyle:UIAlertViewStyleDefault];
+    [incomingAlert setDelegate:self];
+    [incomingAlert setTitle:@"Incoming call."];
+    [incomingAlert addButtonWithTitle:@"Decline"];
+    [incomingAlert addButtonWithTitle:@"Answer"];
+    [incomingAlert setCancelButtonIndex:0];
+    [incomingAlert show];
+}
+
+- (void)incomingCallDisconnected {
+    if(isIncomingCallRinging) {
+        [incomingAlert dismissWithClickedButtonIndex:[incomingAlert cancelButtonIndex] animated:YES];
+        isIncomingCallRinging = NO;
+        isReceivingCall = YES;
+    }
+    
 }
 
 #pragma mark - UIAlertViewDelegate
-
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView cancelButtonIndex]) {
         [self userDidDenyCall];
     } else {
         [self userDidPickupCall];
     }
+    isIncomingCallRinging = NO;
 }
 
 - (void)userDidPickupCall {

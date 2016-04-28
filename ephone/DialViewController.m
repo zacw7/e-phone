@@ -45,8 +45,7 @@
 }
 
 - (void)initData {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
            selector:@selector(refreshData:)
                name:@"refresh"
              object:nil];
