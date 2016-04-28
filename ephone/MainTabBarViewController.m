@@ -9,8 +9,9 @@
 #import "MainTabBarViewController.h"
 
 @implementation MainTabBarViewController {
+    DBUtil *dbUtil;
     GSCall *call;
-    
+    CallRecordModel *crm;
     UIAlertView *incomingAlert;
     
     NSString *callingNumber;
@@ -32,6 +33,7 @@
 }
 
 - (void)initData {
+    dbUtil = [DBUtil sharedManager];
     _dialVC  = [DialViewController new];
     _contactsVC  = [ContactsViewController new];
     _meVC  = [MeViewController new];
@@ -78,8 +80,24 @@
     if(isReceivingCall) isReceivingCall = NO;
     else return;
     isIncomingCallRinging = YES;
-    NSLog(@"ReceiveIncomingCall");
     call = incomingCall;
+    
+    crm = [CallRecordModel new];
+    NSDateFormatter *df = [NSDateFormatter new];
+    [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    crm.callTime = [df stringFromDate:[NSDate date]];
+    
+    NSString *remoteUriAddress = [call getRemoteUri];
+    NSArray *remoteArray = [remoteUriAddress componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<:@>"]];
+    int shift = 0;
+    if([remoteArray[0] isEqualToString:@""]) shift = 1;
+    NSString *remoteAccount = remoteArray[1+shift];
+    NSString *remoteDomain = remoteArray[2+shift];
+    
+    crm.account = remoteAccount;
+    crm.domain = remoteDomain;
+    crm.myAccount = (NSString *)self.username;
+    
     incomingAlert = [[UIAlertView alloc] init];
     [incomingAlert setAlertViewStyle:UIAlertViewStyleDefault];
     [incomingAlert setDelegate:self];
@@ -96,7 +114,6 @@
         isIncomingCallRinging = NO;
         isReceivingCall = YES;
     }
-    
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -114,8 +131,19 @@
 }
 
 - (void)userDidDenyCall {
+    [self addMissedCallRecord];
     [call end];
     call = nil;
+}
+
+- (void)addMissedCallRecord {
+    crm.name = @"";
+    crm.attribution = @"";
+    crm.duration = @"--:--:--";
+    crm.callType = MISSED;
+    crm.networkType = SIP;
+    
+    [dbUtil insertRecentContactsRecord:crm];
 }
 
 - (void)makeCall:(CallType) callType {

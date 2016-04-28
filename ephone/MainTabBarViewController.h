@@ -11,6 +11,7 @@
 #import "ContactsViewController.h"
 #import "MeViewController.h"
 #import "CallViewController.h"
+#import "DBUtil.h"
 
 #import "Gossip.h"
 
