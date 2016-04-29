@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolBox/AudioToolbox.h>
 #import "DialViewController.h"
 #import "ContactsViewController.h"
 #import "MeViewController.h"

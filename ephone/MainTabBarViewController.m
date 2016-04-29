@@ -9,6 +9,8 @@
 #import "MainTabBarViewController.h"
 
 @implementation MainTabBarViewController {
+    SystemSoundID sound; // 1000~2000
+    
     DBUtil *dbUtil;
     GSCall *call;
     CallRecordModel *crm;

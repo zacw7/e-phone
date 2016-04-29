@@ -93,6 +93,7 @@
 		79913C6F1CC9C95F002D6B30 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */; };
 		79913C741CC9EFF9002D6B30 /* CallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */; };
 		79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */; };
+		79A6907C1CD30AD70087A4E3 /* AudioUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6907B1CD30AD70087A4E3 /* AudioUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +227,8 @@
 		79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableViewCell.m; sourceTree = "<group>"; };
 		79913C771CCA11F1002D6B30 /* ExpandedCallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedCallTableViewCell.h; sourceTree = "<group>"; };
 		79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedCallTableViewCell.m; sourceTree = "<group>"; };
+		79A6907A1CD30AD70087A4E3 /* AudioUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioUtil.h; sourceTree = "<group>"; };
+		79A6907B1CD30AD70087A4E3 /* AudioUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +460,8 @@
 			children = (
 				794946D01CC872CC008EA743 /* DBUtil.h */,
 				794946D11CC872CC008EA743 /* DBUtil.m */,
+				79A6907A1CD30AD70087A4E3 /* AudioUtil.h */,
+				79A6907B1CD30AD70087A4E3 /* AudioUtil.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -615,6 +620,7 @@
 				7934AA5F1CC4BB3D0016181C /* CustomTableViewCell.m in Sources */,
 				7934AA5E1CC4BB3D0016181C /* ContactsViewController.m in Sources */,
 				7934AA5D1CC4BB3D0016181C /* ContactDetailViewController.m in Sources */,
+				79A6907C1CD30AD70087A4E3 /* AudioUtil.m in Sources */,
 				794946D21CC872CC008EA743 /* DBUtil.m in Sources */,
 				7934AA5C1CC4BB3D0016181C /* CallViewController.m in Sources */,
 				79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */,
