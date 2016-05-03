@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
 #import "CallRecordModel.h"
+#import "ContactModel.h"
 #import "Constants.h"
 
 #define DB_FILE_NAME @"ephone.sqlite3"
@@ -38,10 +39,23 @@
 #pragma mark 模糊查找通话记录
 - (NSMutableArray *) findRecentContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
 #pragma mark 插入通话记录的方法
-- (BOOL) insertRecentContactsRecord:(CallRecordModel *) prm;
+- (BOOL) insertRecentContactsRecord:(CallRecordModel *) crm;
 #pragma mark 删除指定id通话记录的方法
 - (BOOL) deleteRecentContactRecordById:(int) dbId;
 #pragma mark 根据登陆账号清空该用户通话记录表的方法
 - (BOOL) deleteAllRecentContactRecordWithLoginMobNum:(NSString *) myAccount;
+
+#pragma mark 创建联系人表
+- (BOOL) createContactsTable;
+#pragma mark 查询联系人通话记录的方法
+- (NSMutableArray *) findAllContactsRecordByLoginMobNum:(NSString *) myAccount;
+#pragma mark 模糊联系人
+- (NSMutableArray *) findContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
+#pragma mark 插入联系人的方法
+- (BOOL) insertContactsRecord:(ContactModel *) cm;
+#pragma mark 删除指定id联系人的方法
+- (BOOL) deleteContactRecordById:(int) dbId;
+#pragma mark 根据登陆账号清空该用户联系人的方法
+- (BOOL) deleteAllContactRecordWithLoginMobNum:(NSString *) myAccount;
 
 @end
