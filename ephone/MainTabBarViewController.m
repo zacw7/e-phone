@@ -9,9 +9,9 @@
 #import "MainTabBarViewController.h"
 
 @implementation MainTabBarViewController {
-    SystemSoundID sound; // 1000~2000
-    
     DBUtil *dbUtil;
+    AudioUtil *audioUtil;
+    
     GSCall *call;
     CallRecordModel *crm;
     UIAlertView *incomingAlert;
@@ -36,6 +36,8 @@
 
 - (void)initData {
     dbUtil = [DBUtil sharedManager];
+    audioUtil = [AudioUtil sharedManager];
+    
     _dialVC  = [DialViewController new];
     _contactsVC  = [ContactsViewController new];
     _meVC  = [MeViewController new];
@@ -69,7 +71,28 @@
     self.logoutIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.logoutIndicatorView.center = self.view.center;
     [self.view addSubview: self.logoutIndicatorView];
+    
+//    UIButton *testbtn1 = [[UIButton alloc] initWithFrame:CGRectMake(10, 50, 100, 100)];
+//    [testbtn1 setBackgroundColor:[UIColor purpleColor]];
+//    [testbtn1 addTarget:self action:@selector(testBtn1Clicked) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:testbtn1];
+//    
+//    UIButton *testbtn2 = [[UIButton alloc] initWithFrame:CGRectMake(200, 50, 100, 100)];
+//    [testbtn2 setBackgroundColor:[UIColor yellowColor]];
+//    [testbtn2 addTarget:self action:@selector(testBtn2Clicked) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:testbtn2];
 }
+
+//- (void)testBtn1Clicked {
+//    NSLog(@"Test Button 1 Clicked!!!");
+//    [audioUtil playSoundConstantly];
+//    [audioUtil playVibrateConstantly];
+//}
+//
+//- (void)testBtn2Clicked {
+//    NSLog(@"Test Button 1 Clicked!!!");
+//    [audioUtil stop];
+//}
 
 #pragma mark - DialDelegate
 - (void)makeSipCall:(NSString*) sipUri {
@@ -83,6 +106,8 @@
     else return;
     isIncomingCallRinging = YES;
     call = incomingCall;
+    [audioUtil playSoundConstantly];
+    [audioUtil playVibrateConstantly];
     
     crm = [CallRecordModel new];
     NSDateFormatter *df = [NSDateFormatter new];
@@ -129,10 +154,12 @@
 }
 
 - (void)userDidPickupCall {
+    [audioUtil stop];
     [self makeCall:INCOMING];
 }
 
 - (void)userDidDenyCall {
+    [audioUtil stop];
     [self addMissedCallRecord];
     [call end];
     call = nil;

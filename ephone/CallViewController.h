@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 #import "DBUtil.h"
+#import "AudioUtil.h"
 #import "CallRecordModel.h"
 
 #import "Gossip.h"

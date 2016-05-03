@@ -24,44 +24,52 @@ static AudioUtil *util=nil;
 - (id)init {
     self = [super init];
     if (self) {
-        sound = nil;
-        vibrate = kSystemSoundID_Vibrate; //Vibrate
+        audioSession = [AVAudioSession sharedInstance];
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [audioSession setActive:YES error:nil];
+        
+        NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"adrianro_09b" ofType:@"mp3"];
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundPath];
+        self.player = [[AVAudioPlayer alloc]  initWithContentsOfURL:fileURL error:nil];
+        vibrateTimer = nil;
     }
     return self;
 }
 
-- (id)initSystemSoundWithName:(NSString *)soundName SoundType:(NSString *)soundType {
-    self = [super init];
-    if (self) {
-        NSString *path = [NSString stringWithFormat:@"/System/Library/Audio/UISounds/%@.%@",soundName,soundType];
-        //[[NSBundle bundleWithIdentifier:@"com.apple.UIKit" ]pathForResource:soundName ofType:soundType];//得到苹果框架资源UIKit.framework ，从中取出所要播放的系统声音的路径
-        //[[NSBundle mainBundle] URLForResource: @"tap" withExtension: @"aif"];  获取自定义的声音
-        if (path) {
-            OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&sound);
-            
-            if (error != kAudioServicesNoError) {//获取的声音的时候，出现错误
-                sound = nil;
-            }
-        }
-    }
-    return self;
+- (void)playSoundOnce {
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+    self.player.numberOfLoops = 0;
+    [self.player play];
 }
 
-- (void)playSouldWithName:(NSString *)soundName SoundType:(NSString *)soundType {
-    NSString *path = [NSString stringWithFormat:@"/System/Library/Audio/UISounds/%@.%@",soundName, soundType];
-    //[[NSBundle bundleWithIdentifier:@"com.apple.UIKit" ]pathForResource:soundName ofType:soundType];//得到苹果框架资源UIKit.framework ，从中取出所要播放的系统声音的路径
-    //[[NSBundle mainBundle] URLForResource: @"tap" withExtension: @"aif"];  获取自定义的声音
-    if (path) {
-        OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&sound);
-        if (error != kAudioServicesNoError) {//获取的声音的时候，出现错误
-            sound = nil;
-        }
-        AudioServicesPlaySystemSound(sound);
-    }
+- (void)playSoundConstantly {
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+    self.player.numberOfLoops = -1;
+    [self.player play];
 }
 
-- (void)playVibrate {
-    AudioServicesPlayAlertSound(vibrate);
+- (void)playVibrateOnce {
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+}
+
+- (void)playVibrateConstantly {
+    [self playVibrateOnce];
+    vibrateTimer = [NSTimer scheduledTimerWithTimeInterval:3.5 target:self selector:@selector(playVibrateOnce) userInfo:nil repeats:YES];
+}
+
+- (void)stop {
+    [self.player stop];
+    [self.player setCurrentTime:0];
+    [vibrateTimer invalidate];
+    vibrateTimer = nil;
+}
+
+- (void)setSpeaker {
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
+}
+
+- (void)setHeadphone {
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
 }
 
 @end

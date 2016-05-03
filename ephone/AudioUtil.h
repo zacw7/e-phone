@@ -7,17 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AudioToolBox/AudioToolBox.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface AudioUtil : NSObject {
-    SystemSoundID vibrate;
-    SystemSoundID sound; // 1000-2000
+    AVAudioSession *audioSession;
+    NSTimer *vibrateTimer;
 }
 
+@property (strong, nonatomic) AVAudioPlayer *player;
+
 + (AudioUtil *) sharedManager; //获取单例对象
-- (id)initSystemVibrate; //Vibrate
-- (id)initSystemSoundWithName:(NSString *)soundName SoundType:(NSString *)soundType; //初始化系统声音
-- (void)playSound;
-- (void)playVibrate;
+- (void)playSoundOnce;
+- (void)playSoundConstantly;
+- (void)playVibrateOnce;
+- (void)playVibrateConstantly;
+- (void)stop;
+
+- (void)setSpeaker;
+- (void)setHeadphone;
 
 @end

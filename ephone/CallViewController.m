@@ -38,6 +38,7 @@
     NSString *localDomain;
     
     DBUtil *dbUtil;
+    AudioUtil *audioUtil;
 }
 
 @synthesize call = _call;
@@ -51,6 +52,7 @@
 
 - (void)initData {
     dbUtil = [DBUtil sharedManager];
+    audioUtil = [AudioUtil sharedManager];
     _crm = [CallRecordModel new];
     
     seconds = -1;
@@ -238,12 +240,13 @@
         isSpeaker = NO;
         [speakerBtn setTitle:@"Speaker" forState:UIControlStateNormal];
         [speakerBtn.layer setBackgroundColor:[UIColor blackColor].CGColor];
-
+        [audioUtil setHeadphone];
     } else {
         // Use Speaker
         isSpeaker = YES;
         [speakerBtn setTitle:@"Headphone" forState:UIControlStateNormal];
         [speakerBtn.layer setBackgroundColor:[UIColor grayColor].CGColor];
+        [audioUtil setSpeaker];
     }
 }
 
