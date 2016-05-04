@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef enum {
-    SIP = 0,
-    PSTN,
-} NetworkType;
+#import "Constants.h"
 
 @interface ContactModel : NSObject
 

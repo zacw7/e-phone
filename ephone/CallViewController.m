@@ -186,14 +186,14 @@
         // Unmute
         if([_call setVolume:volume]) {
             isMute = NO;
-            [muteBtn setTitle:@"Unmute" forState:UIControlStateNormal];
+            [muteBtn setTitle:@"Mute" forState:UIControlStateNormal];
             [muteBtn.layer setBackgroundColor:[UIColor blackColor].CGColor];
         }
     } else {
         // Mute
         if([_call setVolume:0]) {
             isMute = YES;
-            [muteBtn setTitle:@"Mute" forState:UIControlStateNormal];
+            [muteBtn setTitle:@"Unmute" forState:UIControlStateNormal];
             [muteBtn.layer setBackgroundColor:[UIColor grayColor].CGColor];
         }
     }

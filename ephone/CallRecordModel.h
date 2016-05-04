@@ -7,18 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef enum {
-    OUTCOMING = 0,
-    INCOMING,
-    FAILED,
-    MISSED,
-} CallType;
-
-typedef enum {
-    SIP = 0,
-    PSTN,
-} NetworkType;
+#import "Constants.h"
 
 @interface CallRecordModel : NSObject
 

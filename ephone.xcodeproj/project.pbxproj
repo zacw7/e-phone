@@ -91,6 +91,7 @@
 		794946CD1CC8705B008EA743 /* CallRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946CC1CC8705B008EA743 /* CallRecordModel.m */; };
 		794946D21CC872CC008EA743 /* DBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946D11CC872CC008EA743 /* DBUtil.m */; };
 		79807DC51CD850050091D9D5 /* adrianro_09b.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79807DC41CD850050091D9D5 /* adrianro_09b.mp3 */; };
+		79807DC91CD88A0B0091D9D5 /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79807DC81CD88A0B0091D9D5 /* ContactModel.m */; };
 		79913C6F1CC9C95F002D6B30 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */; };
 		79913C741CC9EFF9002D6B30 /* CallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */; };
 		79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */; };
@@ -224,6 +225,8 @@
 		794946D41CC874A4008EA743 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		79804A6C1CCE192E00AC05D7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		79807DC41CD850050091D9D5 /* adrianro_09b.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = adrianro_09b.mp3; sourceTree = "<group>"; };
+		79807DC71CD88A0B0091D9D5 /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
+		79807DC81CD88A0B0091D9D5 /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		79913C6E1CC9C95F002D6B30 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		79913C721CC9EFF9002D6B30 /* CallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableViewCell.h; sourceTree = "<group>"; };
 		79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableViewCell.m; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 			children = (
 				794946CB1CC8705B008EA743 /* CallRecordModel.h */,
 				794946CC1CC8705B008EA743 /* CallRecordModel.m */,
+				79807DC71CD88A0B0091D9D5 /* ContactModel.h */,
+				79807DC81CD88A0B0091D9D5 /* ContactModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -636,6 +641,7 @@
 				79913C741CC9EFF9002D6B30 /* CallTableViewCell.m in Sources */,
 				7934AA651CC4BB3D0016181C /* PhonePadView.m in Sources */,
 				7934AA661CC4BB3D0016181C /* SignupViewController.m in Sources */,
+				79807DC91CD88A0B0091D9D5 /* ContactModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

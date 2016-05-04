@@ -15,6 +15,16 @@
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define SERVER_ADDRESS @"121.42.43.237"
 
+typedef enum {
+    OUTCOMING = 0,
+    INCOMING,
+    FAILED,
+    MISSED,
+} CallType;
 
+typedef enum {
+    SIP = 0,
+    PSTN,
+} NetworkType;
 
 #endif /* Constants_h */
