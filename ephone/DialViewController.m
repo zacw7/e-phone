@@ -37,6 +37,7 @@
 @synthesize delegate = _delegate;
 @synthesize phonePadView = _phonePadView;
 @synthesize recordTableView = _recordTableView;
+@synthesize addContactView = _addContactView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -227,8 +228,17 @@
 #pragma mark 保存联系人按钮点击
 - (void)recordSaveBtnClicked {
     //    long index=btn.titleLabel.tag;
-    NSLog(@"Record Save");
+    NSLog(@"Contact Save");
+    ContactModel *cm = [ContactModel alloc];
+    cm.name = expandedCallRecord.name;
+    cm.account = expandedCallRecord.account;
+    cm.domain = expandedCallRecord.domain;
+    cm.attribution = expandedCallRecord.attribution;
+    cm.networkType = expandedCallRecord.networkType;
+    cm.myAccount = expandedCallRecord.myAccount;
     
+    _addContactView = [[AddContactView alloc] initWithContactModel:cm];
+    [self.view addSubview:_addContactView];
 }
 
 - (void)initKeyboard {

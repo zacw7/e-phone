@@ -43,7 +43,7 @@ static DBUtil * util=nil;
 #pragma mark 创建通话记录联系人表
 - (BOOL) createRecentContactsTable{
     NSString *SQL=[NSString stringWithFormat:
-                    @"CREATE TABLE IF NOT EXISTS t_phone_record(id integer primary key autoincrement, name varchar(32), account varchar(32), domain varchar(32), attribution varchar(20), callTime varcher(20), duration char(8), callType int, networkType int, myAccount varchar(32), contactId integer foreign key)"];
+                    @"CREATE TABLE IF NOT EXISTS t_phone_record(id integer primary key autoincrement, name varchar(32), account varchar(32), domain varchar(32), attribution varchar(20), callTime varcher(20), duration char(8), callType int, networkType int, myAccount varchar(32))"];
     BOOL isCreationSuccess = [self execSql:SQL];
     return isCreationSuccess;
     /**
@@ -438,7 +438,7 @@ static DBUtil * util=nil;
         NSLog(@"数据库打开失败",nil);
         return NO;
     }else{
-        NSString *SQL=@"insert into t_phone_record(id, name, account, domain, attribution, networkType, myAccount) values(NULL, ?, ?, ?, ?, ?, ?)";
+        NSString *SQL=@"insert into t_contact(id, name, account, domain, attribution, networkType, myAccount) values(NULL, ?, ?, ?, ?, ?, ?)";
         sqlite3_stmt *statement;
         int code1= sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL);
         if (code1==SQLITE_OK) {

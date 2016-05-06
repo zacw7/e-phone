@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 #import "PhonePadView.h"
+#import "AddContactView.h"
 #import "NumberButton.h"
 #import "CallRecordModel.h"
 #import "CallTableViewCell.h"
@@ -35,5 +36,7 @@
 @property (strong, nonatomic) UIView *noRecordView;
 @property (strong, nonatomic) UITableView *recordTableView;
 @property (strong, nonatomic) PhonePadView *phonePadView;
+
+@property (strong, nonatomic) AddContactView *addContactView;
 
 @end

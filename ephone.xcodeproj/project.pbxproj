@@ -88,6 +88,7 @@
 		7934AA871CC4BC3A0016181C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA861CC4BC3A0016181C /* CoreGraphics.framework */; };
 		7934AA891CC4BC3F0016181C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA881CC4BC3F0016181C /* Foundation.framework */; };
 		7934AAA31CC4BCEA0016181C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7934AAA21CC4BCEA0016181C /* Images.xcassets */; };
+		79369C2F1CDC436400398A65 /* AddContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79369C2E1CDC436400398A65 /* AddContactView.m */; };
 		794946CD1CC8705B008EA743 /* CallRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946CC1CC8705B008EA743 /* CallRecordModel.m */; };
 		794946D21CC872CC008EA743 /* DBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 794946D11CC872CC008EA743 /* DBUtil.m */; };
 		79807DC51CD850050091D9D5 /* adrianro_09b.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79807DC41CD850050091D9D5 /* adrianro_09b.mp3 */; };
@@ -218,6 +219,8 @@
 		7934AA8A1CC4BC440016181C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7934AAA21CC4BCEA0016181C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7934AAB41CC4E14C0016181C /* Gossip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gossip.xcodeproj; path = gossip/Gossip.xcodeproj; sourceTree = "<group>"; };
+		79369C2D1CDC436400398A65 /* AddContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactView.h; sourceTree = "<group>"; };
+		79369C2E1CDC436400398A65 /* AddContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactView.m; sourceTree = "<group>"; };
 		794946CB1CC8705B008EA743 /* CallRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallRecordModel.h; sourceTree = "<group>"; };
 		794946CC1CC8705B008EA743 /* CallRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallRecordModel.m; sourceTree = "<group>"; };
 		794946D01CC872CC008EA743 /* DBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBUtil.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 				79913C731CC9EFF9002D6B30 /* CallTableViewCell.m */,
 				79913C771CCA11F1002D6B30 /* ExpandedCallTableViewCell.h */,
 				79913C781CCA11F1002D6B30 /* ExpandedCallTableViewCell.m */,
+				79369C2D1CDC436400398A65 /* AddContactView.h */,
+				79369C2E1CDC436400398A65 /* AddContactView.m */,
 			);
 			name = DialViewController;
 			sourceTree = "<group>";
@@ -626,6 +631,7 @@
 				794946CD1CC8705B008EA743 /* CallRecordModel.m in Sources */,
 				7934A9C01CC4B2760016181C /* main.m in Sources */,
 				7934A9C31CC4B2760016181C /* AppDelegate.m in Sources */,
+				79369C2F1CDC436400398A65 /* AddContactView.m in Sources */,
 				7934AA5F1CC4BB3D0016181C /* CustomTableViewCell.m in Sources */,
 				7934AA5E1CC4BB3D0016181C /* ContactsViewController.m in Sources */,
 				7934AA5D1CC4BB3D0016181C /* ContactDetailViewController.m in Sources */,
