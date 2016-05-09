@@ -31,13 +31,14 @@
     DBUtil *dbUtil;
     
     NSTimer *refreshTimer;
-    BOOL isReloading;
+    BOOL isKeyboardShow;
+    CGPoint newContactViewOrginCenter;
 }
 
 @synthesize delegate = _delegate;
 @synthesize phonePadView = _phonePadView;
 @synthesize recordTableView = _recordTableView;
-@synthesize addContactView = _addContactView;
+@synthesize addNewContactView = _addNewContactView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,7 +55,7 @@
     selectedIndex = -1;
     dataArr = [NSMutableArray new];
     expandedCallRecord = nil;
-    isReloading = NO;
+    isKeyboardShow = NO;
     
     dataArr=[dbUtil findAllRecentContactsRecordByLoginMobNum:(NSString*)self.myAccount];
 }
@@ -237,8 +238,58 @@
     cm.networkType = expandedCallRecord.networkType;
     cm.myAccount = expandedCallRecord.myAccount;
     
-    _addContactView = [[AddContactView alloc] initWithContactModel:cm];
-    [self.view addSubview:_addContactView];
+    _addNewContactView = [[NewContactView alloc] initWithContactModel:cm];
+    newContactViewOrginCenter = _addNewContactView.center;
+    [self.view addSubview:_addNewContactView];
+    _addNewContactView.nameInput.delegate = self;
+    _addNewContactView.accountInput.delegate = self;
+    _addNewContactView.addressInput.delegate = self;
+}
+
+#pragma mark - TextFieldDelegate
+- (void)hideKeyboardEventHandler {
+    [_addNewContactView.nameInput resignFirstResponder];
+    [_addNewContactView.accountInput resignFirstResponder];
+    [_addNewContactView.addressInput resignFirstResponder];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _addNewContactView.nameInput) {
+        [_addNewContactView.accountInput becomeFirstResponder];
+    } else if(textField == _addNewContactView.accountInput) {
+        [_addNewContactView.addressInput becomeFirstResponder];
+    }else {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) keyboardWillShow: (NSNotification *)notif {
+    float duration = (isKeyboardShow) ? 0 : 0.3;
+    isKeyboardShow = YES;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationDelegate:self];
+    _addNewContactView.center = CGPointMake(newContactViewOrginCenter.x, newContactViewOrginCenter.y - 100);
+    [UIView commitAnimations];
+}
+
+- (void) keyboardWillHide: (NSNotification *)notif {
+    isKeyboardShow = NO;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDelegate:self];
+    CGPoint newCenter = _addNewContactView.center;
+    newCenter.y += 100;
+    _addNewContactView.center = newContactViewOrginCenter;
+    [UIView commitAnimations];
 }
 
 - (void)initKeyboard {

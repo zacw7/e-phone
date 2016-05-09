@@ -348,7 +348,7 @@ static DBUtil * util=nil;
 }
 
 #pragma mark 查询联系人通话记录的方法
-- (NSMutableArray *) findAllContactsRecordByLoginMobNum:(NSString *) myAccount {
+- (NSMutableArray *) findAllContactsByLoginMobNum:(NSString *) myAccount {
     NSMutableArray *resultList=[[NSMutableArray alloc]init];
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
@@ -390,7 +390,7 @@ static DBUtil * util=nil;
 }
 
 #pragma mark 模糊联系人
-- (NSMutableArray *) findContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount {
+- (NSMutableArray *) findContactsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount {
     NSMutableArray *resultList=[[NSMutableArray alloc]init];
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
@@ -432,7 +432,7 @@ static DBUtil * util=nil;
 }
 
 #pragma mark 插入联系人的方法
-- (BOOL) insertContactsRecord:(ContactModel *) contactModel {
+- (BOOL) insertContact:(ContactModel *) contactModel {
     if ([self openDB] != SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
         NSLog(@"数据库打开失败",nil);
@@ -463,7 +463,7 @@ static DBUtil * util=nil;
 }
 
 #pragma mark 删除指定id联系人的方法
-- (BOOL) deleteContactRecordById:(int) dbId {
+- (BOOL) deleteContactById:(int) dbId {
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
         NSLog(@"数据库打开失败",nil);
@@ -489,7 +489,7 @@ static DBUtil * util=nil;
 }
 
 #pragma mark 根据登陆账号清空该用户联系人的方法
-- (BOOL) deleteAllContactRecordWithLoginMobNum:(NSString *) myAccount {
+- (BOOL) deleteAllContactsWithLoginMobNum:(NSString *) myAccount {
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
         sqlite3_close(db);
         NSLog(@"数据库打开失败",nil);

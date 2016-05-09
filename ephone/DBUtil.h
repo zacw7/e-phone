@@ -48,14 +48,14 @@
 #pragma mark 创建联系人表
 - (BOOL) createContactsTable;
 #pragma mark 查询联系人通话记录的方法
-- (NSMutableArray *) findAllContactsRecordByLoginMobNum:(NSString *) myAccount;
+- (NSMutableArray *) findAllContactsByLoginMobNum:(NSString *) myAccount;
 #pragma mark 模糊联系人
-- (NSMutableArray *) findContactsRecordsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
+- (NSMutableArray *) findContactsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
 #pragma mark 插入联系人的方法
-- (BOOL) insertContactsRecord:(ContactModel *) cm;
+- (BOOL) insertContact:(ContactModel *) cm;
 #pragma mark 删除指定id联系人的方法
-- (BOOL) deleteContactRecordById:(int) dbId;
+- (BOOL) deleteContactById:(int) dbId;
 #pragma mark 根据登陆账号清空该用户联系人的方法
-- (BOOL) deleteAllContactRecordWithLoginMobNum:(NSString *) myAccount;
+- (BOOL) deleteAllContactsWithLoginMobNum:(NSString *) myAccount;
 
 @end

@@ -11,7 +11,11 @@
 #import "Constants.h"
 #import "DBUtil.h"
 
-@interface AddContactView : UIView <UITextFieldDelegate>
+@interface NewContactView : UIView
+
+@property (strong, nonatomic) UITextField *nameInput;
+@property (strong, nonatomic) UITextField *accountInput;
+@property (strong, nonatomic) UITextField *addressInput;
 
 - (id)initWithContactModel:(ContactModel*) cm;
 

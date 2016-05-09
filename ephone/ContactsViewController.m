@@ -8,7 +8,14 @@
 
 #import "ContactsViewController.h"
 
-@implementation ContactsViewController
+@implementation ContactsViewController {
+    //被选中联系人行的下标
+    long selectedIndex;
+    //联系人数组
+    NSMutableArray *dataArr;
+    
+    DBUtil *dbUtil;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -17,109 +24,51 @@
 }
 
 - (void)initData {
-    //tabBarController = (MainTabBarViewController*)self.tabBarController;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData:)
+                                                 name:@"refresh"
+                                               object:nil];
     
-    CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    
-    __weak ContactsViewController *weakSelf = self;
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        if(granted) {
-            [weakSelf filterContentForSearchText:@""];
-        }
-    });
-    CFRelease(addressBook);
+    dbUtil = [DBUtil sharedManager];
+    selectedIndex = -1;
+    dataArr=[dbUtil findAllContactsByLoginMobNum:(NSString*)self.myAccount];
+
 }
 
 - (void)initViews {
-    // set search bar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+32,
-                                                                   SCREEN_WIDTH-32, 32)];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    // init noContactView
+    self.noContactView = [[UIView alloc] initWithFrame:self.view.frame];
+    UIImageView *noContactImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    noContactImageView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-40);
+    noContactImageView.image = [UIImage imageNamed:@"bg_no_contacts.png"];
+    [self.noContactView addSubview:noContactImageView];
+    
+    UILabel *noContactLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 240, 20)];
+    noContactLabel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 40 + noContactImageView.frame.size.height);
+    noContactLabel.text = @"No Record";
+    noContactLabel.textAlignment = NSTextAlignmentCenter;
+    noContactLabel.textColor = [UIColor lightGrayColor];
+    [self.noContactView addSubview:noContactLabel];
+    [self.view addSubview:self.noContactView];
+    
+    // init SearchBar
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X, SCREEN_ORIGIN_Y+32,
+                                                                   SCREEN_WIDTH, 32)];
     self.searchBar.delegate = self;
     self.searchBar.showsScopeBar = NO;
     [self.searchBar sizeToFit];
     [self.view addSubview:self.searchBar];
     
-    // set table view
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X+16, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH-32, SCREEN_HEIGHT-64)];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
+    // init TableView
+    self.contactTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_ORIGIN_X, SCREEN_ORIGIN_Y+self.searchBar.frame.size.height+32, SCREEN_WIDTH, SCREEN_HEIGHT-196) style:UITableViewStylePlain];
+    self.contactTableView.delegate=self;
+    self.contactTableView.dataSource=self;
+    [self.contactTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    self.contactTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:self.contactTableView];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)filterContentForSearchText:(NSString *)searchText {
-    if(ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized) {
-        return;
-    }
-
-    CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    
-    if([searchText length] == 0) {
-        // search all
-        self.listContacts = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    } else {
-        // condition search
-        CFStringRef cfSearchText = (CFStringRef)CFBridgingRetain(searchText);
-        self.listContacts = CFBridgingRelease(ABAddressBookCopyPeopleWithName(addressBook, cfSearchText));
-        CFRelease(cfSearchText);
-    }
-    [self.tableView reloadData];
-    CFRelease(addressBook);
-}
-
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ContactDetailViewController *contactDetailViewController = [segue destinationViewController];
-        
-        ABRecordRef thisPerson = CFBridgingRetain([self.listContacts objectAtIndex:[indexPath row]]);
-        
-        ABRecordID personID = ABRecordGetRecordID(thisPerson);
-        NSNumber *personIDAsNumber = [NSNumber numberWithInt:personID];
-        
-        contactDetailViewController.personIDAsNumber = personIDAsNumber;
-        
-        CFRelease(thisPerson);
-    }
-}
-
-#pragma mark - Table View Settings
-
-- (NSInteger *)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.listContacts count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"ContactCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    ABRecordRef thisPerson = CFBridgingRetain([self.listContacts objectAtIndex:[indexPath row]]);
-    NSString *firstName = CFBridgingRelease(ABRecordCopyValue(thisPerson, kABPersonFirstNameProperty));
-    firstName = (firstName != nil) ? firstName : @"";
-    NSString *lastName = CFBridgingRelease(ABRecordCopyValue(thisPerson, kABPersonLastNameProperty));
-    lastName = (lastName != nil) ? lastName : @"";
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-    NSString* name = CFBridgingRelease(ABRecordCopyCompositeName(thisPerson));
-    cell.textLabel.text = name;
-    
-    CFRelease(thisPerson);
-    
-    return cell;
-}
-
 
 #pragma mark - Search Bar Delegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -127,6 +76,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self filterContentForSearchText:searchBar.text];
     [self.searchBar resignFirstResponder];
 }
 
@@ -135,7 +85,84 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(nonnull NSString *)searchText {
-    [self filterContentForSearchText:self.searchBar.text];
+    [self filterContentForSearchText:searchBar.text];
+    if([searchText length] == 0) {
+        [searchBar performSelector: @selector(resignFirstResponder)
+                        withObject: nil
+                        afterDelay: 0.1];
+    }
+}
+
+- (void)filterContentForSearchText:(NSString *)searchText {
+    if([searchText length] == 0) {
+        // search all
+        dataArr=[dbUtil findAllContactsByLoginMobNum:(NSString*)self.myAccount];
+    } else {
+        // condition search
+        dataArr = [dbUtil findContactsByLoginSearchBarContent:searchText withAccount:(NSString*)self.myAccount];
+    }
+    if([dataArr count]) {
+        [_contactTableView setHidden:NO];
+        [_contactTableView reloadData];
+    } else {
+        [_contactTableView setHidden:YES];
+    }
+}
+
+#pragma mark UITableView delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if ([dataArr count]) { //没有通话记录
+        [self.view bringSubviewToFront: self.contactTableView];
+    }else{
+        [self.view bringSubviewToFront: self.noContactView];
+    }
+    return [dataArr count];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    //选中之后的cell的高度
+    if (selectedIndex == indexPath.row){
+        return 120;
+    }
+    else
+        return 60;
+}
+
+//选中Cell
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (selectedIndex==indexPath.row) {//点击自身则收起来
+        selectedIndex=-1;
+    }else{
+        selectedIndex=indexPath.row;
+    }
+    [self.contactTableView reloadData];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (selectedIndex==indexPath.row) {//展开的Cell
+//        expandedCallRecord=dataArr[indexPath.row];
+//        ExpandedCallTableViewCell *expCallCell = [[ExpandedCallTableViewCell alloc] initWithCallRecordModel:expandedCallRecord];
+//        [expCallCell.callBtn addTarget:self action:@selector(recordCallBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//        [expCallCell.deleteBtn addTarget:self action:@selector(recordDeleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//        [expCallCell.saveBtn addTarget:self action:@selector(recordSaveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//        return expCallCell;
+    }else{//没有展开的Cell
+        ContactModel *cm =dataArr[indexPath.row];
+        ContactTableViewCell *contactCell = [[ContactTableViewCell alloc] initWithContactModel:cm];
+        return contactCell;
+    }
+    return [UITableViewCell new];
+}
+
+- (void)refreshData:(id)sender{
+    if(self.searchBar.text.length) {
+        dataArr = [dbUtil findContactsByLoginSearchBarContent:self.searchBar.text withAccount:(NSString*)self.myAccount];
+    } else {
+        dataArr = [dbUtil findAllContactsByLoginMobNum:(NSString*)self.myAccount];
+    }
+    [_contactTableView reloadData];
 }
 
 @end

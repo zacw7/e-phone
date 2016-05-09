@@ -44,6 +44,8 @@
     
     _dialVC.delegate = self;
     _dialVC.myAccount = self.username;
+    _contactsVC.myAccount = self.username;
+    _meVC.myAccount = self.username;
     
     _agent = [GSUserAgent sharedAgent];
     _account = _agent.account;
