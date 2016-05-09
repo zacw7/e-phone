@@ -16,6 +16,7 @@ profile
 
 # CocoaPods stuff
 .ruby-version
+Pods/
 
 # Exclude OS X folder attributes
 .DS_Store
