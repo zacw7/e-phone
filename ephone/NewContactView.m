@@ -92,6 +92,16 @@
 }
 
 - (void)saveContact {
+    if([_nameInput.text isEqualToString:@""]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingEmptyName" object:self];
+        return;
+    }
+    if([_accountInput.text isEqualToString:@""]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingEmptyAccount" object:self];
+        return;
+    }
+    contactModel.name = _nameInput.text;
+    contactModel.attribution = _addressInput.text;
     [dbUtil insertContact:contactModel];
     [self removeFromSuperview];
 }

@@ -57,5 +57,7 @@
 - (BOOL) deleteContactById:(int) dbId;
 #pragma mark 根据登陆账号清空该用户联系人的方法
 - (BOOL) deleteAllContactsWithLoginMobNum:(NSString *) myAccount;
+#pragma mark 根据号码查询联系人信息
+- (ContactModel*) queryContactByAccount:(NSString*) account withAccount:(NSString*) myAccount;
 
 @end

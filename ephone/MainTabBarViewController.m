@@ -59,6 +59,23 @@
                                              selector:@selector(incomingCallDisconnected)
                                                  name:GSSIPCallStateDidChangeNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactInsertingDone)
+                                                 name:@"contactInsertingDone"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactInsertingFailed)
+                                                 name:@"contactInsertingFailed"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactInsertingEmptyName)
+                                                 name:@"contactInsertingEmptyName"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactInsertingEmptyAccount)
+                                                 name:@"contactInsertingEmptyAccount"
+                                               object:nil];
 }
 
 - (void)initViews {
@@ -135,14 +152,6 @@
     [incomingAlert addButtonWithTitle:@"Answer"];
     [incomingAlert setCancelButtonIndex:0];
     [incomingAlert show];
-}
-
-- (void)incomingCallDisconnected {
-    if(isIncomingCallRinging) {
-        [incomingAlert dismissWithClickedButtonIndex:[incomingAlert cancelButtonIndex] animated:YES];
-        isIncomingCallRinging = NO;
-        isReceivingCall = YES;
-    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -233,6 +242,68 @@
     [_agent reset];
     [self.logoutIndicatorView stopAnimating];
     [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+#pragma mark - Notification Handler
+- (void)incomingCallDisconnected {
+    if(isIncomingCallRinging) {
+        [incomingAlert dismissWithClickedButtonIndex:[incomingAlert cancelButtonIndex] animated:YES];
+        isIncomingCallRinging = NO;
+        isReceivingCall = YES;
+    }
+}
+
+- (void)contactInsertingDone {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the custom view mode to show any view.
+    hud.mode = MBProgressHUDModeCustomView;
+    // Set an image view with a checkmark.
+    UIImage *image = [[UIImage imageNamed:@"Checkmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    hud.customView = [[UIImageView alloc] initWithImage:image];
+    // Looks a bit nicer if we make it square.
+    hud.square = YES;
+    // Optional label text.
+    hud.labelText = @"Done";
+    //hud.label.text = NSLocalizedString(@"Done", @"HUD done title");
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactInsertingFailed {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the annular determinate mode to show task progress.
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Replicated Contact!";
+    // Move to bottm center.
+    hud.yOffset = SCREEN_HEIGHT/4;
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactInsertingEmptyName {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the annular determinate mode to show task progress.
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Empty Name!";
+    // Move to bottm center.
+    hud.yOffset = SCREEN_HEIGHT/4;
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactInsertingEmptyAccount {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the annular determinate mode to show task progress.
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Empty Number!";
+    // Move to bottm center.
+    hud.yOffset = SCREEN_HEIGHT/4;
+    
+    [hud hide:YES afterDelay:1.5f];
 }
 
 @end

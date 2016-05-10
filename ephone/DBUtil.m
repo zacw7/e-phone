@@ -45,6 +45,10 @@ static DBUtil * util=nil;
     NSString *SQL=[NSString stringWithFormat:
                     @"CREATE TABLE IF NOT EXISTS t_phone_record(id integer primary key autoincrement, name varchar(32), account varchar(32), domain varchar(32), attribution varchar(20), callTime varcher(20), duration char(8), callType int, networkType int, myAccount varchar(32))"];
     BOOL isCreationSuccess = [self execSql:SQL];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatePhoneRecords)
+                                                 name:@"contactInsertingDone"
+                                               object:nil];
     return isCreationSuccess;
     /**
      通话记录数据库表格结构 t_phone_record
@@ -332,7 +336,7 @@ static DBUtil * util=nil;
 #pragma mark 创建联系人表
 - (BOOL) createContactsTable {
     NSString *SQL=[NSString stringWithFormat:
-                   @"CREATE TABLE IF NOT EXISTS t_contact(id integer primary key autoincrement, name varchar(32) UNIQUE, account varchar(32), domain varchar(32), attribution varchar(20), networkType int, myAccount varchar(32))"];
+                   @"CREATE TABLE IF NOT EXISTS t_contact(id integer primary key autoincrement, name varchar(32) UNIQUE NOT NULL, account varchar(32) UNIQUE NOT NULL, domain varchar(32), attribution varchar(20), networkType int, myAccount varchar(32))"];
     BOOL isCreationSuccess = [self execSql:SQL];
     return isCreationSuccess;
     /**
@@ -452,11 +456,13 @@ static DBUtil * util=nil;
             if (sqlite3_step(statement)!=SQLITE_DONE)
             {
                 NSLog(@"联系人插入失败");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingFailed" object:self];
                 return NO;
             }
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingDone" object:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
@@ -510,6 +516,67 @@ static DBUtil * util=nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
+}
+
+#pragma mark 联系人表有改动时更新通话记录表
+- (BOOL) updatePhoneRecords {
+    if ([self openDB]!=SQLITE_OK) {//数据库打开失败
+        sqlite3_close(db);
+        NSLog(@"数据库打开失败",nil);
+        return NO;
+    }else{
+        NSString *SQL=@"UPDATE t_phone_record SET name = (SELECT t_contact.name FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account), attribution = (SELECT t_contact.attribution FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account) WHERE EXISTS (SELECT * FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account)";
+        BOOL isCreationSuccess = [self execSql:SQL];
+        if(isCreationSuccess) {
+            sqlite3_close(db);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
+            return YES;
+        } else{
+            NSLog(@"更新失败");
+            return NO;
+        }
+    }
+}
+
+#pragma mark 根据号码查询联系人信息
+- (ContactModel*) queryContactByAccount:(NSString*) account withAccount:(NSString*) myAccount{
+    ContactModel *contactModel=[[ContactModel alloc]init];
+    if ([self openDB]!=SQLITE_OK) {//数据库打开失败
+        sqlite3_close(db);
+        NSLog(@"数据库打开失败",nil);
+        return nil;
+    }else{
+        NSString *SQL=@"select * from t_contact where myAccount=? and account = ? limit 1";
+        sqlite3_stmt *statement;
+        if (sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL)==SQLITE_OK) {
+            sqlite3_bind_text(statement, 1, [myAccount UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 2, [account UTF8String], -1, NULL);
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                contactModel.dbId=sqlite3_column_int(statement, 0);
+                
+                char *name=(char *)sqlite3_column_text(statement, 1);
+                if(name) contactModel.name=[[NSString alloc ] initWithUTF8String:name];
+                
+                char *account=(char *)sqlite3_column_text(statement, 2);
+                if(account) contactModel.account=[[NSString alloc ] initWithUTF8String:account];
+                
+                char *domain=(char *)sqlite3_column_text(statement, 3);
+                if(domain) contactModel.domain=[[NSString alloc ] initWithUTF8String:domain];
+                
+                char *attribution=(char *)sqlite3_column_text(statement, 4);
+                if(attribution) contactModel.attribution=[[NSString alloc ] initWithUTF8String:attribution];
+                
+                NetworkType networkType=atoi((char*)sqlite3_column_text(statement, 5));
+                contactModel.networkType = networkType;
+                
+                char  *myAccount=(char *)sqlite3_column_text(statement, 9);
+                if(myAccount) contactModel.myAccount=[[NSString alloc ]initWithUTF8String:myAccount];
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(db);
+    }
+    return contactModel;
 }
 
 @end

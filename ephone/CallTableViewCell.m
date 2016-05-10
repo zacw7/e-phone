@@ -66,7 +66,8 @@
     [self addSubview:callTimeLabel];
     
     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y + CELL_HEIGHT*0.5, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
-    addressLabel.text = _callRecord.domain;
+    if([_callRecord.attribution isEqualToString:@""]) addressLabel.text = _callRecord.domain;
+    else addressLabel.text = _callRecord.attribution;
     addressLabel.textColor = [UIColor darkGrayColor];
     addressLabel.font = [UIFont fontWithName:@"Arial" size:14];
     addressLabel.textAlignment = NSTextAlignmentRight;

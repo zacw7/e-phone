@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
-#import "ContactDetailViewController.h"
 #import "ContactTableViewCell.h"
 #import "DBUtil.h"
 

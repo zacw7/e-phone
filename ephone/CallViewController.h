@@ -11,6 +11,7 @@
 #import "DBUtil.h"
 #import "AudioUtil.h"
 #import "CallRecordModel.h"
+#import "ContactModel.h"
 
 #import "Gossip.h"
 

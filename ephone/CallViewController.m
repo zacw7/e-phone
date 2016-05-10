@@ -37,6 +37,8 @@
     NSString *localAccount;
     NSString *localDomain;
     
+    ContactModel *cm;
+    
     DBUtil *dbUtil;
     AudioUtil *audioUtil;
 }
@@ -80,9 +82,11 @@
     localAccount = localArray[1+shift];
     localDomain = localArray[2+shift];
     
+    cm = [dbUtil queryContactByAccount:remoteAccount withAccount:localAccount];
+    
     [_call addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"callStatusContext"];
     
-    _crm.name = @"";
+    if(cm.name) _crm.name = cm.name; else _crm.name = @"";
     _crm.account = remoteAccount;
     _crm.domain = remoteDomain;
     _crm.attribution = @"";
@@ -108,7 +112,8 @@
                                                            SCREEN_WIDTH/2,
                                                            SCREEN_HEIGHT*0.1 - 1)];
     //[callingNumLabel setBackgroundColor:[UIColor grayColor]]; //////////
-    if([remoteDomain isEqualToString:SERVER_ADDRESS]) callingAddressLabel.text = remoteAccount;
+    if(cm.name) callingAddressLabel.text = cm.name;
+    else if([remoteDomain isEqualToString:SERVER_ADDRESS]) callingAddressLabel.text = remoteAccount;
     else callingAddressLabel.text = [[remoteAccount stringByAppendingString:@"@"] stringByAppendingString:remoteDomain];
     callingAddressLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:callingAddressLabel];
