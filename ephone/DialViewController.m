@@ -30,7 +30,6 @@
     // DBUtil
     DBUtil *dbUtil;
     
-    NSTimer *refreshTimer;
     BOOL isKeyboardShow;
     CGPoint newContactViewOrginCenter;
 }
@@ -38,7 +37,7 @@
 @synthesize delegate = _delegate;
 @synthesize phonePadView = _phonePadView;
 @synthesize recordTableView = _recordTableView;
-@synthesize addNewContactView = _addNewContactView;
+@synthesize addContactView = _addContactView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -238,26 +237,26 @@
     cm.networkType = expandedCallRecord.networkType;
     cm.myAccount = expandedCallRecord.myAccount;
     
-    _addNewContactView = [[NewContactView alloc] initWithContactModel:cm];
-    newContactViewOrginCenter = _addNewContactView.center;
-    [self.view addSubview:_addNewContactView];
-    _addNewContactView.nameInput.delegate = self;
-    _addNewContactView.accountInput.delegate = self;
-    _addNewContactView.addressInput.delegate = self;
+    _addContactView = [[NewContactView alloc] initWithContactModel:cm];
+    newContactViewOrginCenter = _addContactView.center;
+    [self.view addSubview:_addContactView];
+    _addContactView.nameInput.delegate = self;
+    _addContactView.accountInput.delegate = self;
+    _addContactView.addressInput.delegate = self;
 }
 
 #pragma mark - TextFieldDelegate
 - (void)hideKeyboardEventHandler {
-    [_addNewContactView.nameInput resignFirstResponder];
-    [_addNewContactView.accountInput resignFirstResponder];
-    [_addNewContactView.addressInput resignFirstResponder];
+    [_addContactView.nameInput resignFirstResponder];
+    [_addContactView.accountInput resignFirstResponder];
+    [_addContactView.addressInput resignFirstResponder];
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _addNewContactView.nameInput) {
-        [_addNewContactView.accountInput becomeFirstResponder];
-    } else if(textField == _addNewContactView.accountInput) {
-        [_addNewContactView.addressInput becomeFirstResponder];
+    if (textField == _addContactView.nameInput) {
+        [_addContactView.accountInput becomeFirstResponder];
+    } else if(textField == _addContactView.accountInput) {
+        [_addContactView.addressInput becomeFirstResponder];
     }else {
         [textField resignFirstResponder];
     }
@@ -276,7 +275,7 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:duration];
     [UIView setAnimationDelegate:self];
-    _addNewContactView.center = CGPointMake(newContactViewOrginCenter.x, newContactViewOrginCenter.y - 100);
+    _addContactView.center = CGPointMake(newContactViewOrginCenter.x, newContactViewOrginCenter.y - 100);
     [UIView commitAnimations];
 }
 
@@ -286,9 +285,9 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
-    CGPoint newCenter = _addNewContactView.center;
+    CGPoint newCenter = _addContactView.center;
     newCenter.y += 100;
-    _addNewContactView.center = newContactViewOrginCenter;
+    _addContactView.center = newContactViewOrginCenter;
     [UIView commitAnimations];
 }
 

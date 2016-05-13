@@ -43,6 +43,7 @@
     _meVC  = [MeViewController new];
     
     _dialVC.delegate = self;
+    _contactsVC.delegate = self;
     _dialVC.myAccount = self.username;
     _contactsVC.myAccount = self.username;
     _meVC.myAccount = self.username;

@@ -27,4 +27,9 @@ typedef enum {
     PSTN,
 } NetworkType;
 
+@protocol DialDelegate <NSObject>
+@optional
+- (void)makeSipCall:(NSString*) sipUrl;
+@end
+
 #endif /* Constants_h */

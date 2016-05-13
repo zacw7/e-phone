@@ -13,9 +13,17 @@
     long selectedIndex;
     //联系人数组
     NSMutableArray *dataArr;
-    
+    // Current Contact
+    ContactModel *expandedContact;
+    // DBUtil
     DBUtil *dbUtil;
+    
+    BOOL isKeyboardShow;
+    CGPoint newContactViewOrginCenter;
 }
+
+@synthesize delegate = _delegate;
+@synthesize editContactView = _editContactView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -142,12 +150,12 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (selectedIndex==indexPath.row) {//展开的Cell
-//        expandedCallRecord=dataArr[indexPath.row];
-//        ExpandedCallTableViewCell *expCallCell = [[ExpandedCallTableViewCell alloc] initWithCallRecordModel:expandedCallRecord];
-//        [expCallCell.callBtn addTarget:self action:@selector(recordCallBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-//        [expCallCell.deleteBtn addTarget:self action:@selector(recordDeleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-//        [expCallCell.saveBtn addTarget:self action:@selector(recordSaveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-//        return expCallCell;
+        expandedContact=dataArr[indexPath.row];
+        ExpandedContactTableViewCell *expContactCell = [[ExpandedContactTableViewCell alloc] initWithContactModel:expandedContact];
+        [expContactCell.callBtn addTarget:self action:@selector(contactCallBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [expContactCell.editBtn addTarget:self action:@selector(contactEditBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [expContactCell.deleteBtn addTarget:self action:@selector(contactDeleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        return expContactCell;
     }else{//没有展开的Cell
         ContactModel *cm =dataArr[indexPath.row];
         ContactTableViewCell *contactCell = [[ContactTableViewCell alloc] initWithContactModel:cm];
@@ -155,6 +163,96 @@
     }
     return [UITableViewCell new];
 }
+
+#pragma mark 联系人拨号按钮点击
+- (void)contactCallBtnClicked {
+    if(expandedContact.networkType == SIP){}
+    NSString *sipUri;
+    if(_delegate) {
+        switch (expandedContact.networkType) {
+            case SIP:
+                sipUri = [[expandedContact.account stringByAppendingString:@"@"] stringByAppendingString:expandedContact.domain];
+                [_delegate makeSipCall:sipUri];
+                break;
+            case PSTN:
+                NSLog(@"Unsupported network type currently");
+                break;
+            default:
+                NSLog(@"Unknown network type");
+                break;
+        }
+    }
+}
+
+#pragma mark 联系人修改按钮点击
+- (void)contactEditBtnClicked {
+    ContactModel *cm = [ContactModel alloc];
+    cm.name = expandedContact.name;
+    cm.account = expandedContact.account;
+    cm.domain = expandedContact.domain;
+    cm.attribution = expandedContact.attribution;
+    cm.networkType = expandedContact.networkType;
+    cm.myAccount = expandedContact.myAccount;
+    
+    _editContactView = [[EditContactView alloc] initWithContactModel:cm];
+    newContactViewOrginCenter = _editContactView.center;
+    [self.view addSubview:_editContactView];
+    _editContactView.nameInput.delegate = self;
+    _editContactView.accountInput.delegate = self;
+    _editContactView.addressInput.delegate = self;
+}
+
+#pragma mark 联系人删除按钮点击
+- (void)contactDeleteBtnClicked {
+    [dbUtil deleteContactById:expandedContact.dbId];
+}
+
+#pragma mark - TextFieldDelegate
+- (void)hideKeyboardEventHandler {
+    [_editContactView.nameInput resignFirstResponder];
+    [_editContactView.accountInput resignFirstResponder];
+    [_editContactView.addressInput resignFirstResponder];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _editContactView.nameInput) {
+        [_editContactView.accountInput becomeFirstResponder];
+    } else if(textField == _editContactView.accountInput) {
+        [_editContactView.addressInput becomeFirstResponder];
+    }else {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) keyboardWillShow: (NSNotification *)notif {
+    float duration = (isKeyboardShow) ? 0 : 0.3;
+    isKeyboardShow = YES;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationDelegate:self];
+    _editContactView.center = CGPointMake(newContactViewOrginCenter.x, newContactViewOrginCenter.y - 100);
+    [UIView commitAnimations];
+}
+
+- (void) keyboardWillHide: (NSNotification *)notif {
+    isKeyboardShow = NO;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDelegate:self];
+    CGPoint newCenter = _editContactView.center;
+    newCenter.y += 100;
+    _editContactView.center = newContactViewOrginCenter;
+    [UIView commitAnimations];
+}
+
 
 - (void)refreshData:(id)sender{
     if(self.searchBar.text.length) {

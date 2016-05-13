@@ -10,6 +10,8 @@
 		3CBA7E4B4122855B7B9BC8C9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C44CE2D93365676A021F7C /* libPods.a */; };
 		79081BBE1CC5C3B500486F97 /* libGossip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AABA1CC4E14C0016181C /* libGossip.a */; };
 		79081BBF1CC5C41E00486F97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7934AA8A1CC4BC440016181C /* UIKit.framework */; };
+		7909CED51CE566C20009CFFD /* ExpandedContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7909CED41CE566C20009CFFD /* ExpandedContactTableViewCell.m */; };
+		7909CED91CE56D670009CFFD /* EditContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7909CED81CE56D670009CFFD /* EditContactView.m */; };
 		792E6B261CE1B533001EAEC4 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 792E6B251CE1B533001EAEC4 /* Checkmark.png */; };
 		7934A9C01CC4B2760016181C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7934A9BF1CC4B2760016181C /* main.m */; };
 		7934A9C31CC4B2760016181C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7934A9C21CC4B2760016181C /* AppDelegate.m */; };
@@ -127,6 +129,10 @@
 
 /* Begin PBXFileReference section */
 		72B5E804099C70EDF1D3A829 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7909CED31CE566C20009CFFD /* ExpandedContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedContactTableViewCell.h; sourceTree = "<group>"; };
+		7909CED41CE566C20009CFFD /* ExpandedContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedContactTableViewCell.m; sourceTree = "<group>"; };
+		7909CED71CE56D670009CFFD /* EditContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditContactView.h; sourceTree = "<group>"; };
+		7909CED81CE56D670009CFFD /* EditContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditContactView.m; sourceTree = "<group>"; };
 		792E6B251CE1B533001EAEC4 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
 		7934A9BB1CC4B2760016181C /* ephone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ephone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7934A9BF1CC4B2760016181C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -422,6 +428,10 @@
 				7934AA4A1CC4BB3D0016181C /* ContactsViewController.m */,
 				798E762C1CE01B1600AFE659 /* ContactTableViewCell.h */,
 				798E762D1CE01B1600AFE659 /* ContactTableViewCell.m */,
+				7909CED31CE566C20009CFFD /* ExpandedContactTableViewCell.h */,
+				7909CED41CE566C20009CFFD /* ExpandedContactTableViewCell.m */,
+				7909CED71CE56D670009CFFD /* EditContactView.h */,
+				7909CED81CE56D670009CFFD /* EditContactView.m */,
 			);
 			name = ContactsViewController;
 			sourceTree = "<group>";
@@ -709,6 +719,8 @@
 				79A6907C1CD30AD70087A4E3 /* AudioUtil.m in Sources */,
 				794946D21CC872CC008EA743 /* DBUtil.m in Sources */,
 				7934AA5C1CC4BB3D0016181C /* CallViewController.m in Sources */,
+				7909CED51CE566C20009CFFD /* ExpandedContactTableViewCell.m in Sources */,
+				7909CED91CE56D670009CFFD /* EditContactView.m in Sources */,
 				79913C791CCA11F1002D6B30 /* ExpandedCallTableViewCell.m in Sources */,
 				7934AA601CC4BB3D0016181C /* DialViewController.m in Sources */,
 				7934AA611CC4BB3D0016181C /* LoginViewController.m in Sources */,

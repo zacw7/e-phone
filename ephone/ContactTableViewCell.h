@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <ContactModel.h>
+#import "ContactModel.h"
 
 @interface ContactTableViewCell : UITableViewCell
 

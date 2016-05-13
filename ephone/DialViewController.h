@@ -16,11 +16,6 @@
 #import "ExpandedCallTableViewCell.h"
 #import "DBUtil.h"
 
-@protocol DialDelegate <NSObject>
-@optional
-- (void)makeSipCall:(NSString*) sipUrl;
-@end
-
 @interface DialViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) id<DialDelegate> delegate;
@@ -37,6 +32,6 @@
 @property (strong, nonatomic) UITableView *recordTableView;
 @property (strong, nonatomic) PhonePadView *phonePadView;
 
-@property (strong, nonatomic) NewContactView *addNewContactView;
+@property (strong, nonatomic) NewContactView *addContactView;
 
 @end

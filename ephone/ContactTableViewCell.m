@@ -49,7 +49,7 @@
 //    [self addSubview:callTypeImageView];
     
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.1, ORIGIN_Y, CELL_WIDTH*0.35, CELL_HEIGHT/2)];
-    nameLabel.text = ([_contact.name isEqualToString:@""]) ? @"<Unknown>" : _contact.name;
+    nameLabel.text = _contact.name;
     [self addSubview:nameLabel];
     
     phoneNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.1, ORIGIN_Y + CELL_HEIGHT*0.5, CELL_WIDTH*0.35, CELL_HEIGHT/2)];
@@ -57,15 +57,15 @@
     phoneNumberLabel.textColor = [UIColor grayColor];
     phoneNumberLabel.font = [UIFont fontWithName:@"Arial" size:14];
     [self addSubview:phoneNumberLabel];
+//    
+//    callTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
+//    callTimeLabel.text = @"@?????@@?";
+//    callTimeLabel.textColor = [UIColor darkGrayColor];
+//    callTimeLabel.font = [UIFont fontWithName:@"Arial" size:14];
+//    callTimeLabel.textAlignment = NSTextAlignmentRight;
+//    [self addSubview:callTimeLabel];
     
-    callTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
-    callTimeLabel.text = @"@?????@@?";
-    callTimeLabel.textColor = [UIColor darkGrayColor];
-    callTimeLabel.font = [UIFont fontWithName:@"Arial" size:14];
-    callTimeLabel.textAlignment = NSTextAlignmentRight;
-    [self addSubview:callTimeLabel];
-    
-    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y + CELL_HEIGHT*0.5, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
+    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.4, ORIGIN_Y + CELL_HEIGHT*0.25, CELL_WIDTH*0.45, CELL_HEIGHT/2)];
     if([_contact.attribution isEqualToString:@""]) addressLabel.text = _contact.domain;
     else addressLabel.text = _contact.attribution;
     addressLabel.textColor = [UIColor darkGrayColor];

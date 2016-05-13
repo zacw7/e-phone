@@ -475,7 +475,7 @@ static DBUtil * util=nil;
         NSLog(@"数据库打开失败",nil);
         return NO;
     }else{
-        NSString *SQL=@"delete from t_phone_record where id=?";
+        NSString *SQL=@"delete from t_contact where id=?";
         sqlite3_stmt *statement;
         int code1= sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL);
         if (code1==SQLITE_OK) {
