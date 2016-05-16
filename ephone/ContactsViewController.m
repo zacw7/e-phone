@@ -187,6 +187,7 @@
 #pragma mark 联系人修改按钮点击
 - (void)contactEditBtnClicked {
     ContactModel *cm = [ContactModel alloc];
+    cm.dbId = expandedContact.dbId;
     cm.name = expandedContact.name;
     cm.account = expandedContact.account;
     cm.domain = expandedContact.domain;

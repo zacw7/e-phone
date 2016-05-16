@@ -45,10 +45,6 @@ static DBUtil * util=nil;
     NSString *SQL=[NSString stringWithFormat:
                     @"CREATE TABLE IF NOT EXISTS t_phone_record(id integer primary key autoincrement, name varchar(32), account varchar(32), domain varchar(32), attribution varchar(20), callTime varcher(20), duration char(8), callType int, networkType int, myAccount varchar(32))"];
     BOOL isCreationSuccess = [self execSql:SQL];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatePhoneRecords)
-                                                 name:@"contactInsertingDone"
-                                               object:nil];
     return isCreationSuccess;
     /**
      通话记录数据库表格结构 t_phone_record
@@ -256,7 +252,9 @@ static DBUtil * util=nil;
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recordDeletionSuccess" object:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
+        return NO;
     }
     return YES;
 }
@@ -468,6 +466,38 @@ static DBUtil * util=nil;
     return YES;
 }
 
+#pragma mark 修改联系人的方法
+- (BOOL) editContactByID:(ContactModel *)cm withId:(int)dbId {
+    if ([self openDB] != SQLITE_OK) {//数据库打开失败
+        sqlite3_close(db);
+        NSLog(@"数据库打开失败",nil);
+        return NO;
+    }else{
+        NSString *SQL=@"update t_contact set name=?, account=?, attribution=? where id=?";
+        sqlite3_stmt *statement;
+        int code1= sqlite3_prepare_v2(db, [SQL UTF8String], -1, &statement, NULL);
+        if (code1==SQLITE_OK) {
+            sqlite3_bind_text(statement, 1, [cm.name UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 2, [cm.account UTF8String], -1, NULL);
+            sqlite3_bind_text(statement, 3, [cm.attribution UTF8String], -1, NULL);
+            sqlite3_bind_int(statement, 4, dbId);
+            
+            if (sqlite3_step(statement)!=SQLITE_DONE)
+            {
+                NSLog(@"联系人修改失败");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"contactEditFailed" object:self];
+                return NO;
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(db);
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactEditSuccess" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
+    }
+    return YES;
+}
+
 #pragma mark 删除指定id联系人的方法
 - (BOOL) deleteContactById:(int) dbId {
     if ([self openDB]!=SQLITE_OK) {//数据库打开失败
@@ -489,6 +519,7 @@ static DBUtil * util=nil;
         }
         sqlite3_finalize(statement);
         sqlite3_close(db);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactDeletionSuccess" object:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];
     }
     return YES;
@@ -525,8 +556,10 @@ static DBUtil * util=nil;
         NSLog(@"数据库打开失败",nil);
         return NO;
     }else{
-        NSString *SQL=@"UPDATE t_phone_record SET name = (SELECT t_contact.name FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account), attribution = (SELECT t_contact.attribution FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account) WHERE EXISTS (SELECT * FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account)";
-        BOOL isCreationSuccess = [self execSql:SQL];
+        NSString *SQL1=@"UPDATE t_phone_record SET name = (SELECT t_contact.name FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account), attribution = (SELECT t_contact.attribution FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account) WHERE EXISTS (SELECT * FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account)";
+        BOOL isCreationSuccess = [self execSql:SQL1];
+        NSString *SQL2=@"UPDATE t_phone_record SET name = '' WHERE NOT EXISTS (SELECT * FROM t_contact WHERE t_contact.myAccount=t_phone_record.myAccount AND t_contact.account=t_phone_record.account)";
+        isCreationSuccess = (isCreationSuccess && [self execSql:SQL2]);
         if(isCreationSuccess) {
             sqlite3_close(db);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh" object:self];

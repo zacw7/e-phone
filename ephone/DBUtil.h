@@ -53,6 +53,8 @@
 - (NSMutableArray *) findContactsByLoginSearchBarContent:(NSString *) searchText withAccount:(NSString*) myAccount;
 #pragma mark 插入联系人的方法
 - (BOOL) insertContact:(ContactModel *) cm;
+#pragma mark 修改联系人的方法
+- (BOOL) editContactByID:(ContactModel *) cm withId:(int)dbId;
 #pragma mark 删除指定id联系人的方法
 - (BOOL) deleteContactById:(int) dbId;
 #pragma mark 根据登陆账号清空该用户联系人的方法

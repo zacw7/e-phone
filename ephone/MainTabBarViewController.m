@@ -61,6 +61,19 @@
                                                  name:GSSIPCallStateDidChangeNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:dbUtil
+                                             selector:@selector(updatePhoneRecords)
+                                                 name:@"contactInsertingDone"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:dbUtil
+                                             selector:@selector(updatePhoneRecords)
+                                                 name:@"contactDeletionSuccess"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:dbUtil
+                                             selector:@selector(updatePhoneRecords)
+                                                 name:@"contactEditSuccess"
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contactInsertingDone)
                                                  name:@"contactInsertingDone"
@@ -70,12 +83,32 @@
                                                  name:@"contactInsertingFailed"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contactInsertingEmptyName)
-                                                 name:@"contactInsertingEmptyName"
+                                             selector:@selector(contactEmptyName)
+                                                 name:@"contactEmptyName"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contactInsertingEmptyAccount)
-                                                 name:@"contactInsertingEmptyAccount"
+                                             selector:@selector(contactEmptyAccount)
+                                                 name:@"contactEmptyAccount"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(recordDeletionSuccess)
+                                                 name:@"recordDeletionSuccess"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactDeletionSuccess)
+                                                 name:@"contactDeletionSuccess"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactEditSuccess)
+                                                 name:@"contactEditSuccess"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactEditFailed)
+                                                 name:@"contactEditFailed"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(nothingIsChanged)
+                                                 name:@"nothingIsChanged"
                                                object:nil];
 }
 
@@ -283,24 +316,99 @@
     [hud hide:YES afterDelay:1.5f];
 }
 
-- (void)contactInsertingEmptyName {
+- (void)contactEmptyName {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     // Set the annular determinate mode to show task progress.
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"Empty Name!";
+    hud.labelText = @"Please input name!";
     // Move to bottm center.
     hud.yOffset = SCREEN_HEIGHT/4;
     
     [hud hide:YES afterDelay:1.5f];
 }
 
-- (void)contactInsertingEmptyAccount {
+- (void)contactEmptyAccount {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     // Set the annular determinate mode to show task progress.
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"Empty Number!";
+    hud.labelText = @"Please input number!";
+    // Move to bottm center.
+    hud.yOffset = SCREEN_HEIGHT/4;
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)recordDeletionSuccess {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the custom view mode to show any view.
+    hud.mode = MBProgressHUDModeCustomView;
+    // Set an image view with a checkmark.
+    UIImage *image = [[UIImage imageNamed:@"Checkmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    hud.customView = [[UIImageView alloc] initWithImage:image];
+    // Looks a bit nicer if we make it square.
+    hud.square = YES;
+    // Optional label text.
+    hud.labelText = @"Done";
+    //hud.label.text = NSLocalizedString(@"Done", @"HUD done title");
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactDeletionSuccess {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the custom view mode to show any view.
+    hud.mode = MBProgressHUDModeCustomView;
+    // Set an image view with a checkmark.
+    UIImage *image = [[UIImage imageNamed:@"Checkmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    hud.customView = [[UIImageView alloc] initWithImage:image];
+    // Looks a bit nicer if we make it square.
+    hud.square = YES;
+    // Optional label text.
+    hud.labelText = @"Done";
+    //hud.label.text = NSLocalizedString(@"Done", @"HUD done title");
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactEditSuccess {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the custom view mode to show any view.
+    hud.mode = MBProgressHUDModeCustomView;
+    // Set an image view with a checkmark.
+    UIImage *image = [[UIImage imageNamed:@"Checkmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    hud.customView = [[UIImageView alloc] initWithImage:image];
+    // Looks a bit nicer if we make it square.
+    hud.square = YES;
+    // Optional label text.
+    hud.labelText = @"Done";
+    //hud.label.text = NSLocalizedString(@"Done", @"HUD done title");
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)contactEditFailed {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the annular determinate mode to show task progress.
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Replicated Contact!";
+    // Move to bottm center.
+    hud.yOffset = SCREEN_HEIGHT/4;
+    
+    [hud hide:YES afterDelay:1.5f];
+}
+
+- (void)nothingIsChanged {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Set the annular determinate mode to show task progress.
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Nothing is changed.";
     // Move to bottm center.
     hud.yOffset = SCREEN_HEIGHT/4;
     

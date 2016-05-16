@@ -93,11 +93,11 @@
 
 - (void)saveContact {
     if([_nameInput.text isEqualToString:@""]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingEmptyName" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactEmptyName" object:self];
         return;
     }
     if([_accountInput.text isEqualToString:@""]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInsertingEmptyAccount" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactEmptyAccount" object:self];
         return;
     }
     contactModel.name = _nameInput.text;
