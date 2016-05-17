@@ -161,7 +161,6 @@
         ContactTableViewCell *contactCell = [[ContactTableViewCell alloc] initWithContactModel:cm];
         return contactCell;
     }
-    return [UITableViewCell new];
 }
 
 #pragma mark 联系人拨号按钮点击

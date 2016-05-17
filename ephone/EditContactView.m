@@ -101,6 +101,7 @@
         return;
     }
     contactModel.name = _nameInput.text;
+    contactModel.account = _accountInput.text;
     contactModel.attribution = _addressInput.text;
     [dbUtil editContactByID:contactModel withId:contactModel.dbId];
     [self removeFromSuperview];

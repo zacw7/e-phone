@@ -61,6 +61,11 @@
                                                  name:GSSIPCallStateDidChangeNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(logout)
+                                                 name:@"logout"
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:dbUtil
                                              selector:@selector(updatePhoneRecords)
                                                  name:@"contactInsertingDone"

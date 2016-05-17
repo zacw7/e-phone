@@ -12,6 +12,9 @@
     //MainTabBarViewController *tabBarController;
 }
 
+@synthesize myAccount = _myAccount;
+@synthesize tableView = _tableView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initData];
@@ -19,28 +22,38 @@
 }
 
 - (void)initData {
-    //tabBarController = (MainTabBarViewController*)self.tabBarController;
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"me" ofType:@"plist"];
-    self.listMe = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    
 }
 
-- (void) initViews {
-    UILabel *userInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.2)];
-    [userInfoLabel setBackgroundColor:[UIColor lightGrayColor]];
-    userInfoLabel.center = CGPointMake(self.view.center.x, self.view.center.y*0.4);
-    //userInfoLabel.text = tabBarController.username;
+- (void)initViews {
+    UILabel *myAccountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1)];
+    [myAccountLabel setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    myAccountLabel.center = CGPointMake(self.view.center.x, self.view.center.y*0.35);
+    myAccountLabel.text = @"Account";
+    myAccountLabel.font = [UIFont fontWithName:@"Arial" size:20];
+    myAccountLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:myAccountLabel];
+    
+    UILabel *userInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(myAccountLabel.frame.origin.x, myAccountLabel.frame.origin.y+myAccountLabel.frame.size.height, SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1)];
+    [userInfoLabel setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    userInfoLabel.text = (NSString*)_myAccount;
+    userInfoLabel.font = [UIFont fontWithName:@"Arial" size:20];
     userInfoLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:userInfoLabel];
     
-    [self.view addSubview:self.tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(userInfoLabel.frame.origin.x, userInfoLabel.frame.origin.y+userInfoLabel.frame.size.height, SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.6)];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [_tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:_tableView];
     
     /////////////////////
-    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.2, SCREEN_HEIGHT*0.1)];
-    [exit setBackgroundColor:[UIColor redColor]];
-    [exit addTarget:self.tabBarController action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    [exit setTitle:@"Log Out" forState:UIControlStateNormal];
-    [self.view addSubview:exit];
+//    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.2, SCREEN_HEIGHT*0.1)];
+//    [exit setBackgroundColor:[UIColor redColor]];
+//    [exit addTarget:self.tabBarController action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+//    [exit setTitle:@"Log Out" forState:UIControlStateNormal];
+//    [self.view addSubview:exit];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -48,7 +61,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.listMe count];
+    return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -57,18 +70,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"index: %d", (int)[indexPath row]);
     switch ([indexPath row]) {
         case 0:{
             //TODO
-            NSLog(@"Settings Clicked!");
+            [self settingsEventHandler];
         } break;
         case 1:{
             //TODO
-            NSLog(@"About Clicked!");
+            [self abountEventHandler];
         } break;
         case 2:{
-            [self exitEventHandler];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:self];
         } break;
         default:
             break;
@@ -77,43 +89,35 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"CustomCell";
-    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    NSInteger row = [indexPath row];
-    NSDictionary *rowDict = [self.listMe objectAtIndex:row];
-    
-    cell.myLabel.text = [rowDict objectForKey:@"name"];
-    
-    NSString *imagePath = [rowDict objectForKey:@"image"];
-    imagePath = [imagePath stringByAppendingString:@".png"];
-    cell.myImageView.image = [UIImage imageNamed:imagePath];
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    CustomTableViewCell *cell = [CustomTableViewCell new];
+    [cell initViews];
+    switch ([indexPath row]) {
+        case 0:
+            cell.myLabel.text = @"Settings";
+            cell.myImageView.image = [UIImage imageNamed:@"icon_my_account.png"];
+            break;
+        case 1:
+            cell.myLabel.text = @"About";
+            cell.myImageView.image = [UIImage imageNamed:@"icon_my_about.png"];
+            break;
+        case 2:
+            cell.myLabel.text = @"Log Out";
+            cell.myImageView.image = [UIImage imageNamed:@"icon_my_provision.png"];
+            break;
+        default:
+            break;
+    }
     return cell;
 }
 
 #pragma mark - table cell is selected
 
-- (void)exitEventHandler {
-//    LoginViewController *loginViewController= [LoginViewController new];
-//    GSUserAgent *agent = [GSUserAgent sharedAgent];
-//    [agent.account disconnect];
-//    [self presentViewController:loginViewController animated:YES completion:^{
-//        [loginViewController.account removeObserver:loginViewController forKeyPath:@"status" context:@"accountStatusContext"];
-//        [[GSUserAgent sharedAgent] reset];
-//    }];
+- (void)settingsEventHandler {
+    NSLog(@"Settings Clicked!");
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)abountEventHandler {
+    NSLog(@"About Clicked!");
 }
-*/
 
 @end

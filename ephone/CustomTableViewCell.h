@@ -10,7 +10,9 @@
 
 @interface CustomTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
-@property (weak, nonatomic) IBOutlet UILabel *myLabel;
+@property (strong, nonatomic) UIImageView *myImageView;
+@property (strong, nonatomic) UILabel *myLabel;
+
+- (void)initViews;
 
 @end

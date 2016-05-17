@@ -186,7 +186,6 @@
         CallTableViewCell *callCell = [[CallTableViewCell alloc] initWithCallRecordModel:crm];
         return callCell;
     }
-    return [UITableViewCell new];
 }
 
 - (void)refreshData:(id)sender{
