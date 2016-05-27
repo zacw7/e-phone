@@ -54,45 +54,27 @@
     
     //Add Buttons
     _callBtn = [[UIButton alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.35, ORIGIN_Y, CELL_HEIGHT, CELL_HEIGHT)];
-    UIImage *callImage = [UIImage imageNamed:@"icon_phone.png"];
+    UIImage *callImage = [UIImage imageNamed:@"call.png"];
     UIImageView *callImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, callImage.size.width, callImage.size.height)];
     callImageView.center = CGPointMake(CELL_HEIGHT/2, callImageView.center.y);
     [callImageView setImage:callImage];
-    UILabel *callLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CELL_HEIGHT*0.7, CELL_HEIGHT, CELL_HEIGHT*0.42)];
-    [callLabel setText:@"Call"];
-    callLabel.font = [UIFont fontWithName:@"Arial" size:14];
-    [callLabel setTextColor:[UIColor darkGrayColor]];
-    callLabel.textAlignment = NSTextAlignmentCenter;
     [_callBtn addSubview:callImageView];
-    [_callBtn addSubview:callLabel];
     [_expandView addSubview:_callBtn];
     
     _deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.525, ORIGIN_Y, CELL_HEIGHT, CELL_HEIGHT)];
-    UIImage *deleteImage = [UIImage imageNamed:@"icon_delete.png"];
+    UIImage *deleteImage = [UIImage imageNamed:@"clear.png"];
     UIImageView *deleteImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, deleteImage.size.width, deleteImage.size.height)];
     deleteImageView.center = CGPointMake(CELL_HEIGHT/2, deleteImageView.center.y);
     [deleteImageView setImage:deleteImage];
-    UILabel *deleteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CELL_HEIGHT*0.7, CELL_HEIGHT, CELL_HEIGHT*0.42)];
-    [deleteLabel setText:@"Delete"];
-    deleteLabel.font = [UIFont fontWithName:@"Arial" size:14];
-    [deleteLabel setTextColor:[UIColor darkGrayColor]];
-    deleteLabel.textAlignment = NSTextAlignmentCenter;
     [_deleteBtn addSubview:deleteImageView];
-    [_deleteBtn addSubview:deleteLabel];
     [_expandView addSubview:_deleteBtn];
     
     _saveBtn = [[UIButton alloc] initWithFrame:CGRectMake(ORIGIN_X + CELL_WIDTH*0.7, ORIGIN_Y, CELL_HEIGHT, CELL_HEIGHT)];
-    UIImage *saveImage = [UIImage imageNamed:@"icon_detail.png"];
+    UIImage *saveImage = [UIImage imageNamed:@"person_add.png"];
     UIImageView *saveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, saveImage.size.width, saveImage.size.height)];
     saveImageView.center = CGPointMake(CELL_HEIGHT/2, saveImageView.center.y);
     [saveImageView setImage:saveImage];
-    UILabel *saveLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CELL_HEIGHT*0.7, CELL_HEIGHT, CELL_HEIGHT*0.42)];
-    [saveLabel setText:@"Save"];
-    saveLabel.font = [UIFont fontWithName:@"Arial" size:14];
-    [saveLabel setTextColor:[UIColor darkGrayColor]];
-    saveLabel.textAlignment = NSTextAlignmentCenter;
     [_saveBtn addSubview:saveImageView];
-    [_saveBtn addSubview:saveLabel];
     [_expandView addSubview:_saveBtn];
 }
 

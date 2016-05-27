@@ -83,9 +83,8 @@
     self.loginIndicatorView.center = self.view.center;
     [self.view addSubview:self.loginIndicatorView];
     
-    ////////////////////
-    self.usernameTF.text = @"101";
-    self.passwordTF.text = @"000";
+    self.usernameTF.text = @"10000";
+    self.passwordTF.text = @"00000";
 }
 
 - (void)dealloc {
@@ -95,10 +94,6 @@
 #pragma mark - Button Event Handler
 
 - (void)loginEventHandler {
-//    loginEvent = YES;
-//    [self presentMainViewController];
-//    return;
-    
     NSString *username = self.usernameTF.text;
     NSString *password = self.passwordTF.text;
     if([username isEqualToString:@""]) {
@@ -131,7 +126,6 @@
     
     _account = agent.account;
     [_account addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"accountStatusContext"];
-    //_account.delegate = self;
     [_account connect];
     loginEvent = YES;
 }

@@ -47,13 +47,6 @@
     [_tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_tableView];
-    
-    /////////////////////
-//    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.2, SCREEN_HEIGHT*0.1)];
-//    [exit setBackgroundColor:[UIColor redColor]];
-//    [exit addTarget:self.tabBarController action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-//    [exit setTitle:@"Log Out" forState:UIControlStateNormal];
-//    [self.view addSubview:exit];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -94,15 +87,15 @@
     switch ([indexPath row]) {
         case 0:
             cell.myLabel.text = @"Settings";
-            cell.myImageView.image = [UIImage imageNamed:@"icon_my_account.png"];
+            cell.myImageView.image = [UIImage imageNamed:@"toc.png"];
             break;
         case 1:
             cell.myLabel.text = @"About";
-            cell.myImageView.image = [UIImage imageNamed:@"icon_my_about.png"];
+            cell.myImageView.image = [UIImage imageNamed:@"info_outline.png"];
             break;
         case 2:
             cell.myLabel.text = @"Log Out";
-            cell.myImageView.image = [UIImage imageNamed:@"icon_my_provision.png"];
+            cell.myImageView.image = [UIImage imageNamed:@"settings_power.png"];
             break;
         default:
             break;
